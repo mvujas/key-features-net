@@ -1,0 +1,5 @@
+\babel@toc {serbian}{}
+\contentsline {section}{Sadr\v zaj}{1}%
+\contentsline {section}{{}Uvod}{2}%
+\contentsline {section}{{}Zaklju\v cak}{3}%
+\contentsline {section}{Literatura}{4}%

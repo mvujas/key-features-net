@@ -1,0 +1,88 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[serbian]{babel}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[a4paper]{geometry}
+\usepackage{blindtext}
+\usepackage{tocbibind} % Ubacuje literaturu u sadrzaj
+
+\title{Key Features Net i njene primene}
+\author{Milo\v s Vujasinovi\'c}
+\date{Novi Sad, jul 2020}
+
+\graphicspath{{img}}
+
+% tabularx columns
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+% Variables
+\newcommand{\titlelogosize}{2.4cm}
+
+% custom make title
+\makeatletter         
+\renewcommand\maketitle{
+	\thispagestyle{empty}
+	\begin{tabularx}{\textwidth}{m{\titlelogosize}Ym{\titlelogosize}}	\includegraphics[width=\linewidth]{./pmflogo} &
+		\begin{tabular}{@{}c@{}}
+			УНИВЕРЗИТЕТ У НОВОМ САДУ\\
+			ПРИРОДНО-МАТЕМАТИЧКИ ФАКУЛТЕТ\\
+			ДЕПАРТМАН ЗА МАТЕМАТИКУ И\\
+			ИНФОРМАТИКУ
+		\end{tabular} &
+		\includegraphics[width=\linewidth]{./unslogo}
+	\end{tabularx}
+	
+	\vfill
+	
+	\begin{center}
+		\LARGE
+		\textbf{\@title}
+		
+		\medskip
+		
+		Seminarski rad
+	\end{center}
+	
+	\vfill
+	
+	\begin{flushright}
+		\large
+		\textbf{\@author}
+	\end{flushright}
+	
+	\bigskip
+	\bigskip
+	
+	\begin{center}
+		\large
+		\@date
+	\end{center}
+	\pagebreak
+	
+	\clearpage
+	\pagenumbering{arabic} 
+}
+\makeatother
+
+\begin{document}
+	\maketitle
+	
+	\tableofcontents
+	
+	\pagebreak
+	\section*{Uvod}
+	\addcontentsline{toc}{section}{\protect{}Uvod}
+	
+	Ovako ka\v ze \cite{einstein}. A potvr\dj uju \cite{knuthwebsite} i \cite{latexcompanion}.
+	
+	\pagebreak
+	\section*{Zaklju\v cak}
+	\addcontentsline{toc}{section}{\protect{}Zaklju\v cak}
+	
+	\pagebreak
+	\bibliographystyle{unsrt}
+	\bibliography{references}
+\end{document}
