@@ -98,9 +98,13 @@
 	Na primer, ako imamo klasifikator koji traga za odlikom koja je sadr\v zana u veoma malom broju memorijskih jedinica u pore\dj enju sa veli\v cinom jedne instance podataka, a autonkoder zaklju\v ci da bi uvr\v stavanje date odlike samo pove\'calo gre\v sku, jer bi njenim uvr\v stavanjem bilo onemogu\'ceno uvr\v stavanje neke druge odlike koja je iz pogleda gre\v ske autoenkodera va\v znija.
 	Kao posledica, redukcija podataka ovim postupkom je ne potencijalno samo beskorisna, nego i \v cini podatke beskorisnim ako \v zelimo da ih klasifikujemo ili, jo\v s gore, koristimo za treniranje klasifikatora.
 	
-	Diskutovani problem svakako postavlja pitanje kako se mo\v ze prevazi\'ci, ali pre davanja odgovora na njega, potrobno je da defini\v semo podelu koja \'ce da omogu\'ci uo\v cavanje ovog problema jasnijim i lak\v sim.
+	Diskutovani problem svakako postavlja pitanje kako se mo\v ze prevazi\'ci, ali pre davanja odgovora na njega, potrobno je da defini\v semo podelu koja \'ce da omogu\'ci uo\v cavanje ovog problema jasnijim i lak\v sim. 
+	Iz prikazanog rezonovanja se jasno mo\v ze uvideti da se autoenkoderi mogu trenirati ili u svrhu o\v cuvanja izgleda podataka ili u svrhu o\v cuvanja onoga \v sto podaci ustvari jesu, odnosno njihove su\v stine.
+	Treba imati u vidu da podaci imaju gotovo bezbroj razli\v citih su\v stina u zavisnosti od toga iz kog se ugla posmatraju, to jest da se u zavisnosti od pitanja koje se postavlja o njima njihova su\v stina menja i odatle mo\v zemo da spojimo ideju o su\v stini sa problemom klasifikacije tako \v sto \'cemo re\'ci da pitanje koje postavlja klasifikacioni problem odre\dj uje su\v stinu podataka o kojoj u datom trenutku pri\v camo.
+	Ove ideje se koriste za podelu definisanu u definiciji \ref{autoencoder-training-based-types}.
 	
-	\begin{definition}
+	\begin{definition}[Podela autoenkodera po na\v cinu treniranja]
+		\label{autoencoder-training-based-types}
 		Autoenkoder koji za \v cije se treniranje koristi znanje o samim podacima se naziva \emph{izgledni autoenkoder}, dok autoenkoder za \v cije se treniranje koristi znanje o klasama kojima podaci pripadaju se naziva \emph{su\v stinski autoenkoder}. Treba imati u vidu da date osobine nisu disjunktne, pa postoji i \emph{izgledno-su\v stinski autoenkoder}.
 	\end{definition}
 	
