@@ -85,6 +85,8 @@
 	
 	\section{Poglavlje 1}
 	
+	\subsection{Su\v stina podataka i problem sa tradicionalnim autoenkoderom}
+	
 	Autoenkoderi su neuronske mre\v ze koje se treniraju da opona\v saju identi\v cko preslikavanje, to jest da ulaz preslikava na samog sebe. 
 	Ovo samo po sebi neizgleda veoma korisno, me\dj utim autoenkoderi, pored navedenih, sadr\v ze i osobinu da je broj neurona u najmanjem skrivenom sloju mre\v ze manji od broja neurona ulaznog i izlaznog sloja. 
 	Ovo za implikaciju ima da se prilikom prolaska podataka kroz mre\v zu u datom sloju nalazi reprezentacija podataka za \v cije je predstavljanje potreban manji broj memorijskih jedinica od originalnih podataka i ovo mo\v ze da varira od nekoliko jedinica, pa do redova veli\v cina manje. 
@@ -99,9 +101,9 @@
 	Kao posledica, redukcija podataka ovim postupkom je ne potencijalno samo beskorisna, nego i \v cini podatke beskorisnim ako \v zelimo da ih klasifikujemo ili, jo\v s gore, koristimo za treniranje klasifikatora.
 	
 	Diskutovani problem svakako postavlja pitanje kako se mo\v ze prevazi\'ci, ali pre davanja odgovora na njega, potrobno je da defini\v semo podelu koja \'ce da omogu\'ci uo\v cavanje ovog problema jasnijim i lak\v sim. 
-	Iz prikazanog rezonovanja se jasno mo\v ze uvideti da se autoenkoderi mogu trenirati ili u svrhu o\v cuvanja izgleda podataka ili u svrhu o\v cuvanja onoga \v sto podaci ustvari jesu, odnosno njihove su\v stine.
+	Iz prikazanog rezonovanja se jasno mo\v ze uvideti da se autoenkoderi mogu trenirati ili u svrhu o\v cuvanja izgleda podataka ili u svrhu o\v cuvanja onoga \v sto podaci ustvari jesu, odnosno njihove \emph{su\v stine}.
 	Treba imati u vidu da podaci imaju gotovo bezbroj razli\v citih su\v stina u zavisnosti od toga iz kog se ugla posmatraju, to jest da se u zavisnosti od pitanja koje se postavlja o njima njihova su\v stina menja i odatle mo\v zemo da spojimo ideju o su\v stini sa problemom klasifikacije tako \v sto \'cemo re\'ci da pitanje koje postavlja klasifikacioni problem odre\dj uje su\v stinu podataka o kojoj u datom trenutku pri\v camo.
-	Ove ideje se koriste za podelu definisanu u definiciji \ref{autoencoder-training-based-types}.
+	Ove ideje se koriste za podelu definisanu u definiciji \ref{autoencoder-training-based-types}. Iz ove definicije je jasno da su tradicionalni autoenkoderi ustvari izgledni autoenkoderi, dok autoenkoderi kojima se te\v zi u svrhu prevazila\v zenja diskutovanog problema su su\v stinski autoenkoderi, mada se i za njih, u zavisnosti od implementacije, postavlja pitanje koliko dobro mogu da o\v cuvaju odlike bitne za klasifikaciju.
 	
 	\begin{definition}[Podela autoenkodera po na\v cinu treniranja]
 		\label{autoencoder-training-based-types}
