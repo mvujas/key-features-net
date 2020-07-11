@@ -15,6 +15,9 @@
 
 \graphicspath{{img}}
 
+\newtheorem{definition}{Definicija}
+
+
 % tabularx columns
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 
@@ -92,6 +95,14 @@
 	Ovo je veoma intuitivno re\v senje ako \v zelimo da rezultati na izlazu budu naizgled \v sto sli\v cniji ulaznim podacima. 
 	Me\dj utim dato preslikavanje je u praksi gotovo nemogu\'ce napraviti tako da bude bude savr\v seno.
 	Kao posledica dolazi do izvesne gre\v ske izme\dj u originalnih podataka i rezultata mre\v ze koji mo\v zda neizgledaju zna\v cajno ili su nam gotovo neprimetni, ali, teoretski, mogu zna\v cajno da uti\v cu na rezultate klasifikacije ako bi se rezultati autoenkodera pustili kroz klasifikator i uporedili sa rezultatima klasifikacije originalnih podataka.
+	Na primer, ako imamo klasifikator koji traga za odlikom koja je sadr\v zana u veoma malom broju memorijskih jedinica u pore\dj enju sa veli\v cinom jedne instance podataka, a autonkoder zaklju\v ci da bi uvr\v stavanje date odlike samo pove\'calo gre\v sku, jer bi njenim uvr\v stavanjem bilo onemogu\'ceno uvr\v stavanje neke druge odlike koja je iz pogleda gre\v ske autoenkodera va\v znija.
+	Kao posledica, redukcija podataka ovim postupkom je ne potencijalno samo beskorisna, nego i \v cini podatke beskorisnim ako \v zelimo da ih klasifikujemo ili, jo\v s gore, koristimo za treniranje klasifikatora.
+	
+	Diskutovani problem svakako postavlja pitanje kako se mo\v ze prevazi\'ci, ali pre davanja odgovora na njega, potrobno je da defini\v semo podelu koja \'ce da omogu\'ci uo\v cavanje ovog problema jasnijim i lak\v sim.
+	
+	\begin{definition}
+		Autoenkoder koji za \v cije se treniranje koristi znanje o samim podacima se naziva \emph{izgledni autoenkoder}, dok autoenkoder za \v cije se treniranje koristi znanje o klasama kojima podaci pripadaju se naziva \emph{su\v stinski autoenkoder}. Treba imati u vidu da date osobine nisu disjunktne, pa postoji i \emph{izgledno-su\v stinski autoenkoder}.
+	\end{definition}
 	
 	
 	
