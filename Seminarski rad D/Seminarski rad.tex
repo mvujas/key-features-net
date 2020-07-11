@@ -21,6 +21,9 @@
 % Variables
 \newcommand{\titlelogosize}{2.4cm}
 
+\let\oldsection\section
+\renewcommand\section{\clearpage\oldsection}
+
 % custom make title
 \makeatletter         
 \renewcommand\maketitle{
@@ -72,13 +75,26 @@
 	
 	\tableofcontents
 	
-	\pagebreak
 	\section*{Uvod}
 	\addcontentsline{toc}{section}{\protect{}Uvod}
 	
 	Autoenkoderi su ve\' c godinama zlatni standard u smanjenju dimenzionalnosti podataka. Na\v cin na koji rade se pokazao kao veoma efikasan u otklanjanju \v suma i dopunjavanju podataka koji su o\v ste\' ceni. Motivisan datim primerima, ovaj rad poku\v sava da prika\v ze novi na\v cin gledanja na smanjene dimenzionalnosti podataka ma\v sinskim u\v cenjem. Zatim, primenom iznesenih ideja i nekih od principa koji se nalaze u osnovi autoenkodera se uvodi model neuronske mre\v ze koji za cilj da iz podataka koji se prosle\dj uju modelu izdvoji najbitnije odlike za klasifikaciju. Kroz ovaj postupak se tako\dj e razmatraju novi na\v cini treniranja i evaluacije modela, a na kraju se rezultati datog modela porede sa rezultatima tradicionalnih autoenkodera.
 	
-	\pagebreak
+	\section{Poglavlje 1}
+	
+	Autoenkoderi su neuronske mre\v ze koje se treniraju da opona\v saju identi\v cko preslikavanje, to jest da ulaz preslikava na samog sebe. 
+	Ovo samo po sebi neizgleda veoma korisno, me\dj utim autoenkoderi, pored navedenih, sadr\v ze i osobinu da je broj neurona u najmanjem skrivenom sloju mre\v ze manji od broja neurona ulaznog i izlaznog sloja. 
+	Ovo za implikaciju ima da se prilikom prolaska podataka kroz mre\v zu u datom sloju nalazi reprezentacija podataka za \v cije je predstavljanje potreban manji broj memorijskih jedinica od originalnih podataka i ovo mo\v ze da varira od nekoliko jedinica, pa do redova veli\v cina manje. 
+	Dati skriveni sloj se naziva \emph{usko grlo} (engl. \emph{bottle neck}) i on deli neuronsku mre\v zu na dva dela: od ulaza do sebe i od sebe do izlaza. 
+	Ovi delovi se redom nazivaju \emph{enkoder} i \emph{dekoder}, a oni se koriste za preslikavanje originalnih podataka u reprezentaciju smanjenih dimenzija i nazad.
+	
+	Prilikom treniranja autoenkodera se gre\v ska ra\v cuna kao gre\v ska izme\dj u svakog neurona ulaza i njemu odgovaraju\'ceg neurona izlaza. 
+	Ovo je veoma intuitivno re\v senje ako \v zelimo da rezultati na izlazu budu naizgled \v sto sli\v cniji ulaznim podacima. 
+	Me\dj utim dato preslikavanje je u praksi gotovo nemogu\'ce napraviti tako da bude bude savr\v seno.
+	Kao posledica dolazi do izvesne gre\v ske izme\dj u originalnih podataka i rezultata mre\v ze koji mo\v zda neizgledaju zna\v cajno ili su nam gotovo neprimetni, ali, teoretski, mogu zna\v cajno da uti\v cu na rezultate klasifikacije ako bi se rezultati autoenkodera pustili kroz klasifikator i uporedili sa rezultatima klasifikacije originalnih podataka.
+	
+	
+	
 	\section*{Zaklju\v cak}
 	\addcontentsline{toc}{section}{\protect{}Zaklju\v cak}
 	
