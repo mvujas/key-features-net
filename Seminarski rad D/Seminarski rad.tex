@@ -8,6 +8,9 @@
 \usepackage[a4paper]{geometry}
 \usepackage{blindtext}
 \usepackage{tocbibind} % Ubacuje literaturu u sadrzaj
+\usepackage{amsmath}
+\usepackage{amssymb}
+
 
 \title{Key Features Net i njene primene}
 \author{Milo\v s Vujasinovi\'c}
@@ -24,6 +27,7 @@
 % Variables
 \newcommand{\titlelogosize}{2.4cm}
 
+% Adding pagebreak before section
 \let\oldsection\section
 \renewcommand\section{\clearpage\oldsection}
 
@@ -88,10 +92,10 @@
 	\subsection{Su\v stina podataka i problem sa tradicionalnim autoenkoderom}
 	
 	Autoenkoderi su neuronske mre\v ze koje se treniraju da opona\v saju identi\v cko preslikavanje, to jest da ulaz preslikava na samog sebe. 
-	Ovo samo po sebi neizgleda veoma korisno, me\dj utim autoenkoderi, pored navedenih, sadr\v ze i osobinu da je broj neurona u najmanjem skrivenom sloju mre\v ze manji od broja neurona ulaznog i izlaznog sloja. 
+	Ovo samo po sebi ne izgleda veoma korisno, me\dj utim autoenkoderi, pored navedenih, sadr\v ze i osobinu da je broj neurona u najmanjem skrivenom sloju mre\v ze manji od broja neurona ulaznog i izlaznog sloja. 
 	Ovo za implikaciju ima da se prilikom prolaska podataka kroz mre\v zu u datom sloju nalazi reprezentacija podataka za \v cije je predstavljanje potreban manji broj memorijskih jedinica od originalnih podataka i ovo mo\v ze da varira od nekoliko jedinica, pa do redova veli\v cina manje. 
 	Dati skriveni sloj se naziva \emph{usko grlo} (engl. \emph{bottle neck}) i on deli neuronsku mre\v zu na dva dela: od ulaza do sebe i od sebe do izlaza. 
-	Ovi delovi se redom nazivaju \emph{enkoder} i \emph{dekoder}, a oni se koriste za preslikavanje originalnih podataka u reprezentaciju smanjenih dimenzija i nazad.
+	Ovi delovi se redom nazivaju \emph{enkoder} i \emph{dekoder}, a oni se koriste za preslikavanje originalnih podataka u reprezentaciju smanjenih dimenzija i nazad. U nastavku rada \'ce se autoenkoderi definisati na formalniji na\v cin, ali za trenutne potrebe dato obja\v snjenje je dovoljno.
 	
 	Prilikom treniranja autoenkodera se gre\v ska ra\v cuna kao gre\v ska izme\dj u svakog neurona ulaza i njemu odgovaraju\'ceg neurona izlaza. 
 	Ovo je veoma intuitivno re\v senje ako \v zelimo da rezultati na izlazu budu naizgled \v sto sli\v cniji ulaznim podacima. 
@@ -107,9 +111,35 @@
 	
 	\begin{definition}[Podela autoenkodera po na\v cinu treniranja]
 		\label{autoencoder-training-based-types}
-		Autoenkoder koji za \v cije se treniranje koristi znanje o samim podacima se naziva \emph{izgledni autoenkoder}, dok autoenkoder za \v cije se treniranje koristi znanje o klasama kojima podaci pripadaju se naziva \emph{su\v stinski autoenkoder}. Treba imati u vidu da date osobine nisu disjunktne, pa postoji i \emph{izgledno-su\v stinski autoenkoder}.
+		Autoenkoder za \v cije se treniranje koristi znanje o samim podacima se naziva \emph{izgledni autoenkoder}, dok autoenkoder za \v cije se treniranje koristi znanje o klasama kojima podaci pripadaju se naziva \emph{su\v stinski autoenkoder}. Treba imati u vidu da date osobine nisu disjunktne, pa postoji i \emph{izgledno-su\v stinski autoenkoder}.
+	\end{definition}
+
+
+	\subsection{Podpoglavlje 2}
+	
+	Da bismo razmatrali kako se klase kojima podaci pripadaju mogu uklju\v citi u treniranje autoenkodera defini\v simo prvo autoenkodere na formalniji na\v cin. 
+	Za ovo \'cemo iskoristiti definiciju \ref{general-autoencoder-framework} preuzetu iz \cite[Poglavlje 2]{pmlr-v27-baldi12a}.
+	
+	\begin{definition}[Op\v sti autoenkoder \textit{framework} \cite{pmlr-v27-baldi12a}]
+		\label{general-autoencoder-framework}
+		\sloppy $n/p/n$ autoenkoder je definisan kao $t$-torka $n, p, m, \mathbb{F}, \mathbb{G}, \mathcal{A}, \mathcal{B}, \mathcal{X}, \Delta$ gde va\v zi:
+		\begin{enumerate}
+			\addtolength{\itemindent}{1em}
+			\item $\mathbb{F}$ i $\mathbb{G}$ su skupovi.
+			\item $n$ i $p$ su pozitivni celi brojevi. (Autor razmatra slu\v caj kada je $0 < p < n$ \v sto se podrazumeva prilikom pravljenja autoenkodera)
+			\item $\mathcal{A}: \mathbb{G}^p \to \mathbb{F}^n$
+			\item $\mathcal{B}: \mathbb{F}^n \to \mathbb{G}^p$
+			\item $\mathcal{X} = \{x_1, \ldots, x_m\}$ je skup od $m$ (trening) vektora u $\mathbb{F}^n$. Ako se radi o spolja\v snjem skupu ciljeva u $\mathbb{F}^n$ ozna\v cavamo ga sa $\mathcal{Y} = \{y_1, \ldots, y_n\}$.
+			\item $\Delta$ je funkcija razli\v citosti ili distorcije definisana nad $\mathbb{F}^n$
+		\end{enumerate}
 	\end{definition}
 	
+	Da bismo bolje razumeli datu definiciju i bli\v ze se upoznali sa terminologijom koja \'ce se koristiti u nastavku pro\dj imo kroz sve elemente date $t$-torke koja se koristi za predstavljanje autoenkodera. 
+	Kao \v sto smo ranije pri\v cali ideja iza autoenkodera je da nau\v ci da slika ulaz na samog sebe, a da pri tome postoji skriveni sloj koji je manjih dimenzija od samog ulaza i na ovaj na\v cin se posti\v ze smanjenje dimenzionalnosti podataka.
+	$n$ je ni\v sta manje nego broj dimenzija ulaza kao i izlaza, dok je $p$ broj dimenzija \emph{uskog grla}\footnote{sloj u kome se prilikom prolaza podataka kroz autoenkoder nalazi reprezentacija podataka smanjenih dimenzija}, po\v sto se cilja da je broj dimenzija uskog grla manji i broja dimenzija ulaza zato se i pretpostavlja da je $0 < p < n$. 
+	Svaka memorijska jedinica u ulaznom i izlaznom sloju, odnosno uskog grlu sadr\v zi podatke koji redom pripadaju skupovima $\mathbb{F}$ i $\mathbb{G}$. $\mathcal{B}$ je funkcija koja preslikava ulazne podatke u reprezentaciju smanjenih dimenzija i ona se naziva \emph{enkoder}. $\mathcal{A}$ radi obrnut proces od $\mathcal{B}$ i preslikava reprezentaciju smanjenih dimenzija na izlaz i ova funkcija se naziva \emph{dekoder}.
+	Za treniranje autoenkodera su potrebni podaci i skup trening podataka je u datoj definiciji ozna\v cen sa $\mathcal{X}$.
+	Me\dj utim, podaci se ne koriste samo za treniranje i mo\v zemo imati podatke koji se koriste za evaluaciju ili podatke koji se pu\v staju kroz autoenkoder u cilju smanjenja dimenzija, ovakvi skupovi podataka su u definiciji ozna\v ceni sa $\mathcal{Y}$.
 	
 	
 	\section*{Zaklju\v cak}
