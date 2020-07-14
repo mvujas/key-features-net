@@ -115,7 +115,7 @@
 	\end{definition}
 
 
-	\subsection{Podpoglavlje 2}
+	\subsection{Treniranje su\v stinskih autoenkodera}
 	
 	Da bismo razmatrali kako se klase kojima podaci pripadaju mogu uklju\v citi u treniranje autoenkodera defini\v simo prvo autoenkodere na formalniji na\v cin. 
 	Za ovo \'cemo iskoristiti definiciju \ref{general-autoencoder-framework} preuzetu iz \cite[Poglavlje 2]{pmlr-v27-baldi12a}.
@@ -138,8 +138,24 @@
 	Kao \v sto smo ranije pri\v cali ideja iza autoenkodera je da nau\v ci da slika ulaz na samog sebe, a da pri tome postoji skriveni sloj koji je manjih dimenzija od samog ulaza i na ovaj na\v cin se posti\v ze smanjenje dimenzionalnosti podataka.
 	$n$ je ni\v sta manje nego broj dimenzija ulaza kao i izlaza, dok je $p$ broj dimenzija \emph{uskog grla}\footnote{sloj u kome se prilikom prolaza podataka kroz autoenkoder nalazi reprezentacija podataka smanjenih dimenzija}, po\v sto se cilja da je broj dimenzija uskog grla manji i broja dimenzija ulaza zato se i pretpostavlja da je $0 < p < n$. 
 	Svaka memorijska jedinica u ulaznom i izlaznom sloju, odnosno uskog grlu sadr\v zi podatke koji redom pripadaju skupovima $\mathbb{F}$ i $\mathbb{G}$. $\mathcal{B}$ je funkcija koja preslikava ulazne podatke u reprezentaciju smanjenih dimenzija i ona se naziva \emph{enkoder}. $\mathcal{A}$ radi obrnut proces od $\mathcal{B}$ i preslikava reprezentaciju smanjenih dimenzija na izlaz i ova funkcija se naziva \emph{dekoder}.
+	Treba primetiti da se ovde delovi neuronske mre\v ze posmatraju kao funkcije, jer oni to i jesu, i ova notacija \'ce se u nastavku koristiti kada se govori o neuronskim mre\v zama i njenim delovima.
 	Za treniranje autoenkodera su potrebni podaci i skup trening podataka je u datoj definiciji ozna\v cen sa $\mathcal{X}$.
-	Me\dj utim, podaci se ne koriste samo za treniranje i mo\v zemo imati podatke koji se koriste za evaluaciju ili podatke koji se pu\v staju kroz autoenkoder u cilju smanjenja dimenzija, ovakvi skupovi podataka su u definiciji ozna\v ceni sa $\mathcal{Y}$.
+	Me\dj utim, podaci se ne koriste samo za treniranje i mo\v zemo imati podatke koji se koriste za evaluaciju ili podatke koji se pu\v staju kroz autoenkoder u cilju smanjenja dimenzionalnosti. 
+	Ovakvi skupovi podataka su u definiciji ozna\v ceni sa $\mathcal{Y}$. Na kraju, ostala je jo\v s da se objasni funkcija razli\v citosti ili distorcije $\Delta$ i ona je ni\v sta manje nego funkcija koja govori koliko se izlaz autoenkodera razlikuje od \v zeljenog izlaza. 
+	Ako ovo zvu\v ci poznato, to je ni\v sta manje nego \v sto kod neuronskih mre\v za jo\v s znamo kao i funkcija gre\v ske ili \emph{loss} funkcija.
+	
+	Funkcija gre\v ske je jedna od glavnih karakteristika treninga neuronskih mre\v za i ona govori u kom smeru \'ce se treniranje kretati. 
+	Kao takva ona je o\v cigledna opcija za uklju\v cenje klasa kojima podaci pripadaju u trening i na taj na\v cin dobijanje su\v stinskog autoenkodera. 
+	Me\dj utim, ovo nije tako lako izvesti kao \v sto zvu\v ci. 
+	Dok se kod tradicionalnih, izglednih, autoenkodera srednja kvadratna gre\v ska nudi kao idealna funkcija gre\v ske, kod su\v stinskih autoenkodera stvari su malo komplikovanije i zahtevaju se odre\dj eni trikovi u dobijanju \v zeljenog efekta.
+	Glavni problem je \v sto kod treniranja izglednih autoenkodera je vrednost koju mre\v za treba da proizvede poznata, dok kod su\v stinskih autoenkodera je poznata samo vrednost koja treba da se dobije kada se tra\v zeni rezultati puste kroz odre\dj enu funkciju.
+	Na osnovu ovoga definicija \ref{types-of-machine-learning-training} uvodi dva na\v cina treniranja na koja se model ma\v sinskog u\v cenja mo\v ze u\v citi.
+	
+	\begin{definition}[Podela na\v cina treniranja modela ma\v sinskog u\v cenja]
+		\label{types-of-machine-learning-training}
+		Ako je prilikom treniranja modela ma\v sinskog u\v cenja poznata vrednost koja se treba dobiti kao proizvod rada modela onda se dati proces treniranja naziva \emph{direktno treniranje}. 
+		Nasuprot tome, treniranje u kome je poznata samo vrednost koja se treba dobiti nakon \v sto se rezultati rada modela puste kroz odre\dj enu funkciju se naziva \emph{indirektno treniranje}.
+	\end{definition}
 	
 	
 	\section*{Zaklju\v cak}
