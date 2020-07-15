@@ -156,7 +156,21 @@
 		Ako je prilikom treniranja modela ma\v sinskog u\v cenja poznata vrednost koja se treba dobiti kao proizvod rada modela onda se dati proces treniranja naziva \emph{direktno treniranje}. 
 		Nasuprot tome, treniranje u kome je poznata samo vrednost koja se treba dobiti nakon \v sto se rezultati rada modela puste kroz odre\dj enu funkciju se naziva \emph{indirektno treniranje}.
 	\end{definition}
+
+	Iako su su\v stinski autoenkoderi dati kao primer indirektnog treniranja, uz pomo\'c malog trika, se mo\v ze napraviti da njihovo treniranje bude deo direktnog procesa treniranja.
+	Po\v sto znamo da rezultat su\v stinskog autoenkodera kada se pusti kroz klasifikator treba da nama poznatu klasu, mo\v zemo ovo svesti na istovremeno treniranje autoenkodera i klasifikatora.
+	Ideja je da imamo strukturu autoenkodera i klasifikatora i da od njih napravimo novu neuronsku mre\v zu tako \v sto \'cemo staviti da ulaz prvo prolazi kroz autoenkoder, potom da izlaz autoenkodera bude ulaz u dati klasifikator, a sve zajedno treniramo kao da je jedan veliki klasifikator.
+	Po\v sto znamo da je izlaz autoenkodera istih dimenzija kao i ulaz, koji je ujedno istih dimenzija kao i ulaz klasifikatora, nema problema prilikom prosle\dj ivanja rezultata autoenkodera klasifikatoru, jer su dimenzije odgovaraju\'cih slojeva jednake.
+	Ova ideja iako zvu\v ci mogu\'ce ipak sa sobom nosi dva problema.
+	Prvi je \v sto imamo veliki model \v sto za sobom nosi posledicu du\v zeg vremena treniranja i mo\v ze da na\v skodi kvalitetu samog treninga.
+	Drugi problem je ono \v sto \v cini dati pristup beskorisnim, ali da bismo njega shvatili moramo se vratiti na koncept su\v stine podataka i njene korelacije sa originalnim podacima.
+	Su\v stina podataka je rezultat razmi\v sljanja kako iz podataka mo\v ze da se ukloni \v sto je vi\v se mogu\'ce osobina tako da rezultat klasifikacije podataka koji sadr\v ze preostale osobine bude isti kao rezultat klasifikacije originalnih podataka.
+	Ovo bi zna\v cilo da ako imamo savr\v sen su\v stinski autoenkoder i znamo da ulazni podaci klasifikakuju u odre\dj enu klasu da bi onda i rezultat autoenkodera za date podatke morao da se klasifikuje u istu klasu, kao i obrnuto.
+	Rezultat prethodno opisanog procesa treniranja bi bili autoenkoder i klasifikator i iako bi rezultat klasifikacije kroz dati klasifikator podataka propu\v stenih kroz dati autoenkoder te\v zio ka klasi ka kojoj je treniran, u datom procesu treniranja ne postoji mehanizam koji obezbe\dj uje da \'ce originalni podaci biti dobro klasifikovani kada se puste kroz dati klasifikator.
+	Ovo kao posledicu ima da je dobijeni klasifikator neispravan, \v sto dalje uzrokuje da se dobijeni autoenkoder ne mo\v ze koristiti, jer je treniran na neispravnom klasifikatoru.
 	
+	Prethodno diskutovani proces treniranja, kao \v sto smo videli, sadr\v zi mane i probleme koji ga \v cine neupotrebljivim, me\dj utim on postavlja dobru osnovu u na\v cinu i smeru u kojem treba da se razmi\v slja o ovom problemu.
+	Ono \v sto smo uvideli iz rethodne diskusije je da je za pravljenje ispravnog su\v stinskog autoenkodera potreban ispravan klasifikator, a ma\v sinsko u\v cenje i neuronske mre\v ze se bave temom klasifikatora ve\'c dugo vremena i znamo kako se on mo\v ze napraviti.
 	
 	\section*{Zaklju\v cak}
 	\addcontentsline{toc}{section}{\protect{}Zaklju\v cak}
