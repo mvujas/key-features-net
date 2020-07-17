@@ -11,6 +11,24 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 
+\usepackage{tikz}
+\usetikzlibrary{matrix,chains,positioning,decorations.pathreplacing,arrows}
+\usetikzlibrary{positioning,calc}
+\tikzset{%
+	every neuron/.style={
+		circle,
+		draw,
+		minimum size=1cm
+	},
+	neuron missing/.style={
+		draw=none, 
+		scale=4,
+		text height=0.333cm,
+		execute at begin node=\color{black}$\vdots$
+	},
+}
+
+
 % makes TOC clickable
 \usepackage{hyperref}
 \hypersetup{
@@ -166,10 +184,65 @@
 		Nasuprot tome, treniranje u kome je poznata samo vrednost koja se treba dobiti nakon \v sto se rezultati rada modela puste kroz odre\dj enu funkciju se naziva \emph{indirektno treniranje}.
 	\end{definition}
 
+	\begin{figure}[h!]
+		\centering
+		\begin{tikzpicture}[x=1.5cm, y=1.5cm, >=stealth]
+		
+		\foreach \m/\l [count=\y] in {1,2,3,missing,4}
+		\node [every neuron/.try, neuron \m/.try] (input-autoencoder-\m) at (0,2.5-\y) {};
+		
+		\foreach \m [count=\y] in {1,2,3,missing,4}
+		\node [every neuron/.try, neuron \m/.try ] (output-autoencoder-\m) at (2,2.5-\y) {};
+		
+		\foreach \m [count=\y] in {1,2,3,missing,4}
+		\node [every neuron/.try, neuron \m/.try ] (input-classificator-\m) at (4.5,2.5-\y) {};
+		
+		\foreach \m [count=\y] in {1,missing,2}
+		\node [every neuron/.try, neuron \m/.try ] (output-classificator-\m) at (6.5,1.5-\y) {};
+		
+		\foreach \l [count=\i] in {1,2,3,n}
+		\draw [<-] (input-autoencoder-\i) -- ++(-1,0)
+		node [above, midway] {$I_\l$};
+		
+		\foreach \l [count=\i] in {1,2,3,n}
+		\draw [<-] (input-classificator-\i) -- (output-autoencoder-\i)
+		node [above, midway] {$I'_\l$};
+		
+		\foreach \l [count=\i] in {1,m}
+		\draw [->] (output-classificator-\i) -- ++(1,0)
+		node [above, midway] {$\sigma_\l$};
+		
+		\foreach \i in {1,...,4}
+		\foreach \j in {1,...,4}
+		\draw [->] (input-autoencoder-\i) -- (output-autoencoder-\j);
+		
+		\foreach \i in {1,...,4}
+		\foreach \j in {1,...,2}
+		\draw [->] (input-classificator-\i) -- (output-classificator-\j);
+		
+		\node [align=center, above] at (0,2) {Originalni \\podaci};
+		\node [align=center, above] at (2,2) {Izlaz \\autoenkodera};
+		\node [align=center, above] at (4.5,2) {Ulaz \\klasifikatora};
+		\node [align=center, above] at (6.5,2) {Distribucija \\verovatno\'ce};
+		
+		\coordinate (autoencoder-mid) at ($(input-autoencoder-3)!.5!(output-autoencoder-3)$);
+		\coordinate (classificator-mid) at ($(input-classificator-3)!.5!(output-classificator-1)$);
+		
+		\node[fill=white,scale=3,inner xsep=1pt,inner ysep=10mm] at (autoencoder-mid)
+		{$\dots$};
+		
+		\node[fill=white,scale=3,inner xsep=1pt,inner ysep=10mm] at (autoencoder-mid -| classificator-mid) {$\dots$};
+		
+		\end{tikzpicture}
+		\caption{Model napravljen spajanjem autoenkodera i klasifikatora u jedan veliki klasifikator}
+		\label{autoencoder-classifier-model-combination}
+	\end{figure}
+
 	Iako su su\v stinski autoenkoderi dati kao primer indirektnog treniranja, uz pomo\'c malog trika, se mo\v ze napraviti da njihovo treniranje bude deo direktnog procesa treniranja.
 	Po\v sto znamo da rezultat su\v stinskog autoenkodera kada se pusti kroz klasifikator treba da da nama poznatu klasu, mo\v zemo ovo svesti na istovremeno treniranje autoenkodera i klasifikatora.
 	Ideja je da imamo strukturu autoenkodera i klasifikatora i da od njih napravimo novu neuronsku mre\v zu tako \v sto \'cemo staviti da ulaz prvo prolazi kroz autoenkoder, potom da izlaz autoenkodera bude ulaz u dati klasifikator, a sve zajedno treniramo kao da je jedan veliki klasifikator.
 	Po\v sto znamo da je izlaz autoenkodera istih dimenzija kao i ulaz, koji je ujedno istih dimenzija kao i ulaz klasifikatora, nema problema prilikom prosle\dj ivanja rezultata autoenkodera klasifikatoru, jer su dimenzije odgovaraju\'cih slojeva jednake.
+	Grafik na kojem je prikazan jedan ovakav model se mo\v ze videti na slici \ref{autoencoder-classifier-model-combination}.
 	Ova ideja iako zvu\v ci mogu\'ce ipak sa sobom nosi dva problema.
 	Prvi je \v sto imamo veliki model \v sto za posledicu ima du\v ze vreme treniranja i mo\v ze da na\v skodi kvalitetu istreniranog modela.
 	Drugi problem je ono \v sto \v cini dati pristup beskorisnim, ali da bismo njega shvatili moramo se vratiti na koncept su\v stine podataka i njene korelacije sa originalnim podacima.
