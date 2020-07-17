@@ -221,7 +221,7 @@
 		\draw [->] (input-classificator-\i) -- (output-classificator-\j);
 		
 		\node [align=center, above] at (0,2) {Originalni \\podaci};
-		\node [align=center, above] at (2,2) {Izlaz \\autoenkodera};
+		\node [align=center, above] at (2,2) {Rezultat \\autoenkodera};
 		\node [align=center, above] at (4.5,2) {Ulaz \\klasifikatora};
 		\node [align=center, above] at (6.5,2) {Distribucija \\verovatno\'ce};
 		
@@ -233,8 +233,30 @@
 		
 		\node[fill=white,scale=3,inner xsep=1pt,inner ysep=10mm] at (autoencoder-mid -| classificator-mid) {$\dots$};
 		
+		\draw [
+			thick,
+			decoration={
+				brace,
+				mirror,
+				raise=.7cm
+			},
+			decorate
+		] (input-autoencoder-4.west) -- (output-autoencoder-4.east) 
+		node [pos=0.5,anchor=north,yshift=-0.75cm] {Autoenkoder}; 
+		
+		\draw [
+			thick,
+			decoration={
+				brace,
+				mirror,
+				raise=.7cm
+			},
+			decorate
+		]  (input-classificator-4.west) -- (output-classificator-2.east |- input-classificator-4.west)
+		node [pos=0.5,anchor=north,yshift=-0.75cm] {Klasifikator}; 
+		
 		\end{tikzpicture}
-		\caption{Model napravljen spajanjem autoenkodera i klasifikatora u jedan veliki klasifikator}
+		\caption{Model klasifikatora dobijen spajanjem autoenkodera i manjeg klasifikatora}
 		\label{autoencoder-classifier-model-combination}
 	\end{figure}
 
