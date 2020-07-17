@@ -180,6 +180,15 @@
 	
 	Prethodno diskutovani proces treniranja, kao \v sto smo videli, sadr\v zi mane i probleme koji ga \v cine neupotrebljivim, me\dj utim on postavlja dobru osnovu u na\v cinu i smeru u kojem treba da se razmi\v slja o ovom problemu.
 	Ono \v sto smo uvideli iz prethodne diskusije je da je za pravljenje ispravnog su\v stinskog autoenkodera potreban ispravan klasifikator, a ma\v sinsko u\v cenje i neuronske mre\v ze se bave temom klasifikatora ve\'c dugo vremena i znamo kako se on mo\v ze napraviti.
+	Kada imamo istreniran klasifiaktor mo\v zemo da iskoristimo ideju da spojimo autoenkoder i klasifikator i treniramo novi model kao jedan veliki klasifikator, me\dj utim moramo da zamrznemo sve parametre ve\'c istreniranog klasifiaktora, jer samo tako mo\v zemo da budemo sigurni da \'ce istreniran klasifikator biti ispravan tokom celog treninga i da \'ce se izbe\'ci problem iz prethodnog primera.
+	Realizacija ovoga je po prilici veoma prosta, i dalje se pu\v sta nazadna propagacija\footnote{algoritam koji se koristi za treniranje neuronskih mre\v za} kroz celu mre\v zu, ali uz izmenu da menja samo parametre autoenkodera, dok parametri istreniranog klasifikatora preska\v ce kada na njih do\dj e red da se izmene.
+	Dati autoenkoder se na ovaj na\v cin trenira da preslikava ulaz na rezultat koji se klasifikacijom kroz dati istrenirani autoenkoder svrstava u tra\v zenu klasu.
+	
+	Iako je prethodna ideja veoma blizu re\v senju koje problem zahteva, ona ipak ima jednu manu. 
+	Ako se prisetimo pri\v ce o su\v stini podataka, rekli smo da se originalni podaci i rezultat autoenkodera trebaju klasifikovati u istu klasu, a nema garancije da \'ce istrenirani klasifikator ispravno klasifikovati originalne podatke, dok mi treniramo autoenkoder kao da je ovo slu\v caj.
+	Iz ovog razloga treba da napravimo izmenu onoga \v cemu veliki klasifikator, koji se sastoji od autoenkodera i istreniranog klasifikatora, cilja.
+	Umesto da vodi trening ka klasi kojom su originalni podaci labelovani treba da cilja na distribuciju verovatno\'ce\footnote{klasifikator preslikava ulazne podatke na distribuciju verovatno\'ce koja govori sa kojom verovatno\'com podaci pripadaju svakoj od mogu\'cih klasa} koja se dobije kada se originalni podaci puste kroz istrenirani klasifikator.
+	
 	
 	\section*{Zaklju\v cak}
 	\addcontentsline{toc}{section}{\protect{}Zaklju\v cak}
