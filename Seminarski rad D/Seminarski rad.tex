@@ -11,6 +11,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 
+% makes TOC clickable
 \usepackage{hyperref}
 \hypersetup{
 	colorlinks,
@@ -93,7 +94,7 @@
 	\section*{Uvod}
 	\addcontentsline{toc}{section}{\protect{}Uvod}
 	
-	Autoenkoderi su ve\' c godinama zlatni standard u smanjenju dimenzionalnosti podataka. Na\v cin na koji rade se pokazao kao veoma efikasan u otklanjanju \v suma i dopunjavanju podataka koji su o\v ste\' ceni. Motivisan datim primerima, ovaj rad poku\v sava da prika\v ze novi na\v cin gledanja na smanjene dimenzionalnosti podataka ma\v sinskim u\v cenjem. Zatim, primenom iznesenih ideja i nekih od principa koji se nalaze u osnovi autoenkodera se uvodi model neuronske mre\v ze koji za cilj da iz podataka koji se prosle\dj uju modelu izdvoji najbitnije odlike za klasifikaciju. Kroz ovaj postupak se tako\dj e razmatraju novi na\v cini treniranja i evaluacije modela, a na kraju se rezultati datog modela porede sa rezultatima tradicionalnih autoenkodera.
+	Autoenkoderi su ve\' c godinama zlatni standard u smanjenju dimenzionalnosti podataka. Na\v cin na koji rade se pokazao kao veoma efikasan u otklanjanju \v suma i dopunjavanju podataka koji su o\v ste\' ceni. Motivisan datim primerima, ovaj rad poku\v sava da prika\v ze novi na\v cin gledanja na smanjene dimenzionalnosti podataka ma\v sinskim u\v cenjem. Zatim, primenom iznesenih ideja i nekih od principa koji se nalaze u osnovi autoenkodera se uvodi model neuronske mre\v ze koji ima za cilj da iz podataka koji se prosle\dj uju modelu izdvoji najbitnije odlike za klasifikaciju. Kroz ovaj postupak se tako\dj e razmatraju novi na\v cini treniranja i evaluacije modela, a na kraju se rezultati datog modela porede sa rezultatima tradicionalnih autoenkodera.
 	
 	\section{Poglavlje 1}
 	
@@ -108,9 +109,9 @@
 	Prilikom treniranja autoenkodera se gre\v ska ra\v cuna kao gre\v ska izme\dj u svakog neurona ulaza i njemu odgovaraju\'ceg neurona izlaza. 
 	Ovo je veoma intuitivno re\v senje ako \v zelimo da rezultati na izlazu budu naizgled \v sto sli\v cniji ulaznim podacima. 
 	Me\dj utim dato preslikavanje je u praksi gotovo nemogu\'ce napraviti tako da bude bude savr\v seno.
-	Kao posledica dolazi do izvesne gre\v ske izme\dj u originalnih podataka i rezultata mre\v ze koji mo\v zda neizgledaju zna\v cajno ili su nam gotovo neprimetni, ali, teoretski, mogu zna\v cajno da uti\v cu na rezultate klasifikacije ako bi se rezultati autoenkodera pustili kroz klasifikator i uporedili sa rezultatima klasifikacije originalnih podataka.
+	Kao posledica dolazi do izvesne gre\v ske izme\dj u originalnih podataka i rezultata mre\v ze koji mo\v zda ne izgledaju zna\v cajno ili su nam gotovo neprimetni, ali, teoretski, mogu zna\v cajno da uti\v cu na rezultate klasifikacije ako bi se rezultati autoenkodera pustili kroz klasifikator i uporedili sa rezultatima klasifikacije originalnih podataka.
 	Na primer, ako imamo klasifikator koji traga za odlikom koja je sadr\v zana u veoma malom broju memorijskih jedinica u pore\dj enju sa veli\v cinom jedne instance podataka, a autonkoder zaklju\v ci da bi uvr\v stavanje date odlike samo pove\'calo gre\v sku, jer bi njenim uvr\v stavanjem bilo onemogu\'ceno uvr\v stavanje neke druge odlike koja je iz pogleda gre\v ske autoenkodera va\v znija.
-	Kao posledica, redukcija podataka ovim postupkom je ne potencijalno samo beskorisna, nego i \v cini podatke beskorisnim ako \v zelimo da ih klasifikujemo ili, jo\v s gore, koristimo za treniranje klasifikatora.
+	Kao posledica, redukcija podataka ovim postupkom je ne potencijalno samo beskorisna, nego i \v cini podatke neupotrebljivim ako \v zelimo da ih klasifikujemo ili, jo\v s gore, koristimo za treniranje klasifikatora.
 	
 	Diskutovani problem svakako postavlja pitanje kako se mo\v ze prevazi\'ci, ali pre davanja odgovora na njega, potrobno je da defini\v semo podelu koja \'ce da omogu\'ci uo\v cavanje ovog problema jasnijim i lak\v sim. 
 	Iz prikazanog rezonovanja se jasno mo\v ze uvideti da se autoenkoderi mogu trenirati ili u svrhu o\v cuvanja izgleda podataka ili u svrhu o\v cuvanja onoga \v sto podaci ustvari jesu, odnosno njihove \emph{su\v stine}.
@@ -119,7 +120,7 @@
 	
 	\begin{definition}[Podela autoenkodera po na\v cinu treniranja]
 		\label{autoencoder-training-based-types}
-		Autoenkoder za \v cije se treniranje koristi znanje o samim podacima se naziva \emph{izgledni autoenkoder}, dok autoenkoder za \v cije se treniranje koristi znanje o klasama kojima podaci pripadaju se naziva \emph{su\v stinski autoenkoder}. Treba imati u vidu da date osobine nisu disjunktne, pa postoji i \emph{izgledno-su\v stinski autoenkoder}.
+		Autoenkoder za \v cije se treniranje koristi znanje o samim podacima se naziva \emph{izgledni autoenkoder}, dok autoenkoder za \v cije se treniranje koristi znanje o klasama kojima podaci pripadaju se naziva \emph{su\v stinski autoenkoder}. Treba imati u vidu da date osobine nisu me\dj usobno disjunktne, pa postoji i \emph{izgledno-su\v stinski autoenkoder}.
 	\end{definition}
 
 
@@ -144,7 +145,7 @@
 	
 	Da bismo bolje razumeli datu definiciju i bli\v ze se upoznali sa terminologijom koja \'ce se koristiti u nastavku pro\dj imo kroz sve elemente date $t$-torke koja se koristi za predstavljanje autoenkodera. 
 	Kao \v sto smo ranije pri\v cali ideja iza autoenkodera je da nau\v ci da slika ulaz na samog sebe, a da pri tome postoji skriveni sloj koji je manjih dimenzija od samog ulaza i na ovaj na\v cin se posti\v ze smanjenje dimenzionalnosti podataka.
-	$n$ je ni\v sta manje nego broj dimenzija ulaza kao i izlaza, dok je $p$ broj dimenzija \emph{uskog grla}\footnote{sloj u kome se prilikom prolaza podataka kroz autoenkoder nalazi reprezentacija podataka smanjenih dimenzija}, po\v sto se cilja da je broj dimenzija uskog grla manji i broja dimenzija ulaza zato se i pretpostavlja da je $0 < p < n$. 
+	$n$ je ni\v sta manje nego broj dimenzija ulaza kao i izlaza, dok je $p$ broj dimenzija \emph{uskog grla}\footnote{sloj u kome se prilikom prolaza podataka kroz autoenkoder nalazi reprezentacija podataka smanjenih dimenzija}, po\v sto se cilja da je broj dimenzija uskog grla manji od broja dimenzija ulaza zato se i pretpostavlja da je $0 < p < n$. 
 	Svaka memorijska jedinica u ulaznom i izlaznom sloju, odnosno uskog grlu sadr\v zi podatke koji redom pripadaju skupovima $\mathbb{F}$ i $\mathbb{G}$. $\mathcal{B}$ je funkcija koja preslikava ulazne podatke u reprezentaciju smanjenih dimenzija i ona se naziva \emph{enkoder}. $\mathcal{A}$ radi obrnut proces od $\mathcal{B}$ i preslikava reprezentaciju smanjenih dimenzija na izlaz i ova funkcija se naziva \emph{dekoder}.
 	Treba primetiti da se ovde delovi neuronske mre\v ze posmatraju kao funkcije, jer oni to i jesu, i ova notacija \'ce se u nastavku koristiti kada se govori o neuronskim mre\v zama i njenim delovima.
 	Za treniranje autoenkodera su potrebni podaci i skup trening podataka je u datoj definiciji ozna\v cen sa $\mathcal{X}$.
@@ -155,7 +156,7 @@
 	Funkcija gre\v ske je jedna od glavnih karakteristika treninga neuronskih mre\v za i ona govori u kom smeru \'ce se treniranje kretati. 
 	Kao takva ona je o\v cigledna opcija za uklju\v cenje klasa kojima podaci pripadaju u trening i na taj na\v cin dobijanje su\v stinskog autoenkodera. 
 	Me\dj utim, ovo nije tako lako izvesti kao \v sto zvu\v ci. 
-	Dok se kod tradicionalnih, izglednih, autoenkodera srednja kvadratna gre\v ska nudi kao idealna funkcija gre\v ske, kod su\v stinskih autoenkodera stvari su malo komplikovanije i zahtevaju se odre\dj eni trikovi u dobijanju \v zeljenog efekta.
+	Dok se kod tradicionalnih, izglednih, autoenkodera srednja kvadratna gre\v ska nudi kao idealna funkcija gre\v ske, kod su\v stinskih autoenkodera stvari su malo komplikovanije i zahtevaju se odre\dj eni trikovi u cilju dobijanja \v zeljenog efekta.
 	Glavni problem je \v sto kod treniranja izglednih autoenkodera je vrednost koju mre\v za treba da proizvede poznata, dok kod su\v stinskih autoenkodera je poznata samo vrednost koja treba da se dobije kada se tra\v zeni rezultati puste kroz odre\dj enu funkciju.
 	Na osnovu ovoga definicija \ref{types-of-machine-learning-training} uvodi dva na\v cina treniranja na koja se model ma\v sinskog u\v cenja mo\v ze u\v citi.
 	
@@ -166,19 +167,19 @@
 	\end{definition}
 
 	Iako su su\v stinski autoenkoderi dati kao primer indirektnog treniranja, uz pomo\'c malog trika, se mo\v ze napraviti da njihovo treniranje bude deo direktnog procesa treniranja.
-	Po\v sto znamo da rezultat su\v stinskog autoenkodera kada se pusti kroz klasifikator treba da nama poznatu klasu, mo\v zemo ovo svesti na istovremeno treniranje autoenkodera i klasifikatora.
+	Po\v sto znamo da rezultat su\v stinskog autoenkodera kada se pusti kroz klasifikator treba da da nama poznatu klasu, mo\v zemo ovo svesti na istovremeno treniranje autoenkodera i klasifikatora.
 	Ideja je da imamo strukturu autoenkodera i klasifikatora i da od njih napravimo novu neuronsku mre\v zu tako \v sto \'cemo staviti da ulaz prvo prolazi kroz autoenkoder, potom da izlaz autoenkodera bude ulaz u dati klasifikator, a sve zajedno treniramo kao da je jedan veliki klasifikator.
 	Po\v sto znamo da je izlaz autoenkodera istih dimenzija kao i ulaz, koji je ujedno istih dimenzija kao i ulaz klasifikatora, nema problema prilikom prosle\dj ivanja rezultata autoenkodera klasifikatoru, jer su dimenzije odgovaraju\'cih slojeva jednake.
 	Ova ideja iako zvu\v ci mogu\'ce ipak sa sobom nosi dva problema.
-	Prvi je \v sto imamo veliki model \v sto za sobom nosi posledicu du\v zeg vremena treniranja i mo\v ze da na\v skodi kvalitetu samog treninga.
+	Prvi je \v sto imamo veliki model \v sto za posledicu ima du\v ze vreme treniranja i mo\v ze da na\v skodi kvalitetu istreniranog modela.
 	Drugi problem je ono \v sto \v cini dati pristup beskorisnim, ali da bismo njega shvatili moramo se vratiti na koncept su\v stine podataka i njene korelacije sa originalnim podacima.
 	Su\v stina podataka je rezultat razmi\v sljanja kako iz podataka mo\v ze da se ukloni \v sto je vi\v se mogu\'ce osobina tako da rezultat klasifikacije podataka koji sadr\v ze preostale osobine bude isti kao rezultat klasifikacije originalnih podataka.
-	Ovo bi zna\v cilo da ako imamo savr\v sen su\v stinski autoenkoder i znamo da ulazni podaci klasifikakuju u odre\dj enu klasu da bi onda i rezultat autoenkodera za date podatke morao da se klasifikuje u istu klasu, kao i obrnuto.
+	Ovo bi zna\v cilo da ako imamo savr\v sen su\v stinski autoenkoder i znamo da se ulazni podaci klasifikakuju u odre\dj enu klasu da bi onda i rezultat autoenkodera za date podatke morao da se klasifikuje u istu klasu, kao i obrnuto.
 	Rezultat prethodno opisanog procesa treniranja bi bili autoenkoder i klasifikator i iako bi rezultat klasifikacije kroz dati klasifikator podataka propu\v stenih kroz dati autoenkoder te\v zio ka klasi ka kojoj je treniran, u datom procesu treniranja ne postoji mehanizam koji obezbe\dj uje da \'ce originalni podaci biti dobro klasifikovani kada se puste kroz dati klasifikator.
 	Ovo kao posledicu ima da je dobijeni klasifikator neispravan, \v sto dalje uzrokuje da se dobijeni autoenkoder ne mo\v ze koristiti, jer je treniran na neispravnom klasifikatoru.
 	
 	Prethodno diskutovani proces treniranja, kao \v sto smo videli, sadr\v zi mane i probleme koji ga \v cine neupotrebljivim, me\dj utim on postavlja dobru osnovu u na\v cinu i smeru u kojem treba da se razmi\v slja o ovom problemu.
-	Ono \v sto smo uvideli iz rethodne diskusije je da je za pravljenje ispravnog su\v stinskog autoenkodera potreban ispravan klasifikator, a ma\v sinsko u\v cenje i neuronske mre\v ze se bave temom klasifikatora ve\'c dugo vremena i znamo kako se on mo\v ze napraviti.
+	Ono \v sto smo uvideli iz prethodne diskusije je da je za pravljenje ispravnog su\v stinskog autoenkodera potreban ispravan klasifikator, a ma\v sinsko u\v cenje i neuronske mre\v ze se bave temom klasifikatora ve\'c dugo vremena i znamo kako se on mo\v ze napraviti.
 	
 	\section*{Zaklju\v cak}
 	\addcontentsline{toc}{section}{\protect{}Zaklju\v cak}
