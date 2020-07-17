@@ -189,6 +189,12 @@
 	Iz ovog razloga treba da napravimo izmenu onoga \v cemu veliki klasifikator, koji se sastoji od autoenkodera i istreniranog klasifikatora, cilja.
 	Umesto da vodi trening ka klasi kojom su originalni podaci labelovani treba da cilja na distribuciju verovatno\'ce\footnote{klasifikator preslikava ulazne podatke na distribuciju verovatno\'ce koja govori sa kojom verovatno\'com podaci pripadaju svakoj od mogu\'cih klasa} koja se dobije kada se originalni podaci puste kroz istrenirani klasifikator.
 	
+	Diskutovano re\v senje je, kao \v sto vidimo, ispravno, ali je ra\v cunski veoma zahtevno i bilo bi idealno ako bi mogao da se na\dj e na\v cin da se dati proces ubrza.
+	Ono \v sto mo\v ze da se uradi po ovom pitanju je da popustimo uslov i ne prolazimo kroz ceo istrenirani klasifikator tokom treninga, nego da idemo samo do odre\dj enog sloja datog klasifikatora i treniramo autoenkoder tako da vrednosti u datom sloju kada se rezultati puste kroz klasifikator budu iste kao i u slu\v caju originalnih podataka.
+	Ono \v sto je interesantno je da je na\v cin treniranja tradicionalnih autoenkodera i prethodno diskutovano re\v senje ustvari specijalan slu\v caj ovog pristupa: ako se uzme samo ulazni sloj mre\v ze, dobija se tradicionalno re\v senje, dok ako se uzme ceo autoenkoder dobija se originalno re\v senje izneseno u ovom radu. 
+	Realizacija ove ideje je analogna originalnom re\v senju, me\dj utim prilikom izbora ovog pristupa treba biti svestan da on sa sobom nosi manu da u op\v stem slu\v caju \v sto se uzme manji broj slojeva da \'ce rezultat klasifikacije podataka dobijenih autoenkoderom biti dalje od rezultata klasifikacije originalnih podataka.
+	
+	
 	
 	\section*{Zaklju\v cak}
 	\addcontentsline{toc}{section}{\protect{}Zaklju\v cak}
