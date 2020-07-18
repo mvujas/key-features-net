@@ -365,19 +365,65 @@
 	Za KFN\_MSE i KFN\_MID analogno imamo model pod oznakom \textbf{KFN\_MID\_MSE} i u zavisnosti od kori\v s\'cene funkcije redukcije imamo \textbf{KFN\_MID\_MSE\_SUM} i \textbf{KFN\_MID\_MSE\_AVG}.
 	
 	Mere koje su kori\v s\'cene za evaluaciju klasifikatora su srednja vrednost funkcije gre\v ske, kao i preciznost klasfikacije na evaluacionom skupu podataka.
-	Za razliku od ovoga za autoenkoder i modele \emph{KFN}-a prikazana je identi\v cnost rezultata klasifikacije pri smanjenju dimenzionalnosti podataka i, manje bitne, srednja vrednost funkcije gre\v ske i ta\v cnost klasifikacije kada se rezultati odgovoraja\'cih modela puste kroz istrenirani klasifikator.
+	Za razliku od ovoga za autoenkoder i modele \emph{KFN}-a prikazana je identi\v cnost rezultata klasifikacije pri smanjenju dimenzionalnosti podataka i, manje bitne, srednja vrednost funkcije gre\v ske (\v sto se jo\v s naziva \emph{loss}) i ta\v cnost klasifikacije kada se rezultati odgovoraja\'cih modela puste kroz istrenirani klasifikator.
 	Za evaluaciju je kori\v s\'cen poseban skup podataka koji je nezavisan od skupa kori\v s\'cenog za treniranje bilo kog od navedenih modela.
 	
-	Dosta je bitno videti kako se modeli pona\v saju nad skupovima podataka razli\v cite kompleksnosti, odnosno koliko su skalabilni u zavisnosti od slo\v zenosti klasifikacionog problema kojim je dat.
-	
+	Dosta je bitno videti kako se modeli pona\v saju nad skupovima podataka razli\v cite kompleksnosti, odnosno koliko su skalabilni u zavisnosti od slo\v zenosti klasifikacionog problema koji im je dat.
+	Iz ovog razloga prikazani su rezultati testiranja nad dva skupa podataka koji se razlikuju po kompleksnosti, a to su \textbf{MNIST} i \textbf{CIFAR-10}.
+	Oba skupa su skupovi slika i ovo nije uop\v ste slu\v cajno, jer \'cemo mo\'ci mnogo lak\v se da uporedimo originalne podatke sa rezultatima datih modela nego \v sto bi to bio slu\v caj da se radi o skupovima podataka koji nisu slike i \v sta vi\v se glavna primena autoenkodera je u smanjenju dimenzionalnosti slika.
+	Zbog osobine problema svi modeli \'ce koristiti konvolucijske strukture mre\v za koje su mnogo efikasnije u radu sa slikama nego \v sto je to slu\v caj sa potpuno povezanim slojevima.
+	Za svaki od problema su modeli \emph{KFN}-a identi\v cni  i razlikuje se samo na\v cin njihovog treniranja, dok struktura datog tradicionalnog autoenkodera mo\v ze malo da varira od njih u svrhu dobijanja boljih rezultata (varijacije su na nivou broja filtera u slojevima i kori\v s\'cenju razli\v citih slojeva pri pove\'canju dimenzionalnosti koji rade isti posao uz manje izmene).
 	
 	\subsection{MNIST}
 	
-	\cite{lecun-mnisthandwrittendigit-2010}
+	MNIST je skup podataka koji se sastoji iz dva dela: trening skupa sa 60000 primera i test skupa sa 10000 primera. 
+	On se sastoji od ru\v cno napisanih cifara od 0 do 9 u vidu crno-belih slika dimenzija $28 \times 28$ piksela. 
+	MNIST je veoma jednostavan skup podataka namenjen koji se preporu\v cuje ljudima koji \v zele da nau\v ce tehnike i metode prepoznava\'ca osobina na podacima iz stvarnog sveta \cite{lecun-mnisthandwrittendigit-2010}.
+	Kao takvog ovaj skup podataka mo\v zemo koristiti kao dobar pokazatelj da li su do sada diskutovani metodi uop\v ste primenljivi nad stvarnim podacima i kako se nose sa njima.
 	
-	\subsection{CIFAR}
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			Model & \begin{tabular}{@{}c@{}}\emph{Loss} pri\\ klasifikaciji\\ rezultata\\ modela\end{tabular} & \begin{tabular}{@{}c@{}}Ta\v cnost pri\\ klasifikaciji\\ rezultata\\ modela\end{tabular} & \begin{tabular}{@{}c@{}}Identi\v cnost rezultata\\ klasifikacije pri\\ smanjenju\\ dimenzionalnosti\end{tabular}\\
+			\hline
+			\textbf{AE} & 0 & 0 & 0\\
+			\textbf{KFN\_MSE} & 0 & 0 & 0\\
+			\textbf{KFN\_CE} & 0 & 0 & 0\\
+			\textbf{KFN\_MID} & 0 & 0 & 0\\
+			\textbf{KFN\_CE\_MSE\_SUM} & 0 & 0 & 0\\
+			\textbf{KFN\_CE\_MSE\_AVG} & 0 & 0 & 0\\
+			\textbf{KFN\_MID\_MSE\_SUM} & 0 & 0 & 0\\
+			\textbf{KFN\_MID\_MSE\_AVG} & 0 & 0 & 0\\
+			\hline
+		\end{tabular}
+		\caption{Rezultati evaluacije razli\v citih modela na skupu podataka MNIST}
+		\label{mnist-model-results-table}
+	\end{table}
+	
+	\subsection{CIFAR-10}
 	
 	\cite{cifar10}
+	
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			Model & \begin{tabular}{@{}c@{}}\emph{Loss} pri\\ klasifikaciji\\ rezultata\\ modela\end{tabular} & \begin{tabular}{@{}c@{}}Ta\v cnost pri\\ klasifikaciji\\ rezultata\\ modela\end{tabular} & \begin{tabular}{@{}c@{}}Identi\v cnost rezultata\\ klasifikacije pri\\ smanjenju\\ dimenzionalnosti\end{tabular}\\
+			\hline
+			\textbf{AE} & 0 & 0 & 0\\
+			\textbf{KFN\_MSE} & 0 & 0 & 0\\
+			\textbf{KFN\_CE} & 0 & 0 & 0\\
+			\textbf{KFN\_MID} & 0 & 0 & 0\\
+			\textbf{KFN\_CE\_MSE\_SUM} & 0 & 0 & 0\\
+			\textbf{KFN\_CE\_MSE\_AVG} & 0 & 0 & 0\\
+			\textbf{KFN\_MID\_MSE\_SUM} & 0 & 0 & 0\\
+			\textbf{KFN\_MID\_MSE\_AVG} & 0 & 0 & 0\\
+			\hline
+		\end{tabular}
+		\caption{Rezultati evaluacije razli\v citih modela na skupu podataka CIFAR-10}
+		\label{cifar10-model-results-table}
+	\end{table}
 	
 	
 	
