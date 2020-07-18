@@ -114,7 +114,7 @@
 	
 	Autoenkoderi su ve\' c godinama zlatni standard u smanjenju dimenzionalnosti podataka. Na\v cin na koji rade se pokazao kao veoma efikasan u otklanjanju \v suma i dopunjavanju podataka koji su o\v ste\' ceni. Motivisan datim primerima, ovaj rad poku\v sava da prika\v ze novi na\v cin gledanja na smanjene dimenzionalnosti podataka ma\v sinskim u\v cenjem. Zatim, primenom iznesenih ideja i nekih od principa koji se nalaze u osnovi autoenkodera se uvodi model neuronske mre\v ze koji ima za cilj da iz podataka koji se prosle\dj uju modelu izdvoji najbitnije odlike za klasifikaciju. Kroz ovaj postupak se tako\dj e razmatraju novi na\v cini treniranja i evaluacije modela, a na kraju se rezultati datog modela porede sa rezultatima tradicionalnih autoenkodera.
 	
-	\section{Poglavlje 1}
+	\section{Su\v stinski autoenkoderi}
 	
 	\subsection{Su\v stina podataka i problem sa tradicionalnim autoenkoderom}
 	
@@ -322,6 +322,20 @@
 	Preneseno re\v cima, ovo zna\v ci da dati klasifikatori tragaju za razli\v citim osobinama u svrhu klasifikacije podataka, \v sto bi zna\v cilo da su\v stina podataka nije jedinstvena izme\dj u klasifikatora koji re\v savaju isti klasifikacioni problem.
 	Ovaj problem izlazi iz okvira ovoga rada i s toga ostaje otvoreno pitanje, a ako je odgovor potvrdan, \v sto je verovatno i slu\v caj, treba razmisliti o na\v cinu da se su\v stina iz ugla vi\v se klasifikatora mo\v ze spojiti u jednu celinu.
 	Do trenutka dok se ne odgovori na ova pitanja svako kori\v s\'cenje su\v stinskih autoenkodera sa klasifikatorima sa kojima dati autoenkoder nije treniran je nepreporu\v cljivo.
+	
+	\subsection{Izdvajanje su\v stine podataka}
+	
+	Do sada je bilo mnogo pri\v ce o su\v stini podataka, ali je njeno razumevanje, u smislu da mo\v zemo pogledati podatke i uvideti \v sta je njihova su\v stina, veoma te\v sko.
+	Me\dj utim su\v stinski autoenkoderi govore o o\v cuvanju su\v stine i postavlja se pitanje da li mo\v zemo nekako ovu ideju da iskoristimo za izdvajanje su\v stine iz samih podataka.
+	Ako se zamislimo kako klasifikatori rade, oni u su\v stini tragaju za odre\dj enim osobinama, \v sto bi intuitivno zna\v cilo da odbacuju one za koje vide da nemaju zna\v caja za klasifikaciju i tako kako se ide dublje u klasifikator se u su\v stini sve ve\'ci broj osobina filtrira i pri samom kraju ostaje reprezentacija koja sadr\v zi osobine ulaznih podataka koje su najbitnije za klasifikaciju.
+	Ono \v sto je cilj odavde je da probamo da od ove reprezentacije dobijemo podatke na ulazu i ako je intuicija ta\v cna onda su se osobine koje nisu bitne za klasifikaciju izgubile, \v sto zna\v ci da bi rekonstruisana verzija sadr\v zala samo osobine bitne za klasifikaciju, \v sto je ustvari ono \v sto smo definisali kao su\v stinu podataka.
+	Va\v zno je primetiti da se ovako gledano klasifikator pona\v sa sli\v cno enkoderu ako uzmemu prvih nekoliko slojeva klasifikatora, ali obavezno izostavimo poslednji sloj koji govori o distribuciji verovatno\'ce da  podaci pripadaju svakoj od datih klasa. 
+	\v Sta vi\v se, popu\v stanjem op\v steg autoenkoder \textit{framework}-a (definicija \ref{general-autoencoder-framework}) mo\v zemo ovo uklopiti u njega.
+	Cilj treninga autoenkodera se svodi na pronalazak funkcija $B \in \mathcal{B}$ i $A \in \mathcal{A}$ za koje je funkcija distorcije $\Delta$ po skupu trening vektora minimalna.
+	Uzimanjem prvih nekoliko slojeva klasifikatora da igraju ulogu enkodera mi ustvari ve\'c dobijamo funkciju $B$ iz definicije i proces trenigna bi se ustvari sveo samo na pronalazak funkcije $A$. 
+	Ovo se mo\v ze realizovati na sli\v can na\v cin na koji smo realizovali treniranje su\v stinskog autoenkodera uz pomo\'c unapred istreniranog klasifikatora, a to je samo zamrznemo parametre datog dela klasifikatora, dok ostatak treniramo kao i obi\v cno propagacijom u nazad.
+	Za treniranje ovakve mre\v ze se mogu koristiti na\v cini treniranja izglednih, su\v stinskih, kao i izledno-su\v stinskih autoenkodera, \v sta vi\v se u nastavku rada \'ce se uporediti rezultati svakog od ovih na\v cina treniranja.
+	Ovakva mre\v za \'ce se u nastavku zvati \emph{KeyFeaturesNet} ili skra\'ceno \emph{KFN}.
 	
 	
 	
