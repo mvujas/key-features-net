@@ -39,7 +39,7 @@
 	urlcolor=black
 }
 
-\title{Key Features Net i njene primene}
+\title{Su\v stina podataka i njen zna\v caj za autoenkodere}
 \author{Milo\v s Vujasinovi\'c}
 \date{Novi Sad, jul 2020}
 
@@ -143,6 +143,7 @@
 
 
 	\subsection{Treniranje su\v stinskih autoenkodera}
+	\label{treniranje-sustinskih-autoenkodera}
 	
 	Da bismo razmatrali kako se klase kojima podaci pripadaju mogu uklju\v citi u treniranje autoenkodera defini\v simo prvo autoenkodere na formalniji na\v cin. 
 	Za ovo \'cemo iskoristiti definiciju \ref{general-autoencoder-framework} preuzetu iz \cite[Poglavlje 2]{pmlr-v27-baldi12a}.
@@ -336,6 +337,47 @@
 	Ovo se mo\v ze realizovati na sli\v can na\v cin na koji smo realizovali treniranje su\v stinskog autoenkodera uz pomo\'c unapred istreniranog klasifikatora, a to je samo zamrznemo parametre datog dela klasifikatora, dok ostatak treniramo kao i obi\v cno propagacijom u nazad.
 	Za treniranje ovakve mre\v ze se mogu koristiti na\v cini treniranja izglednih, su\v stinskih, kao i izledno-su\v stinskih autoenkodera, \v sta vi\v se u nastavku rada \'ce se uporediti rezultati svakog od ovih na\v cina treniranja.
 	Ovakva mre\v za \'ce se u nastavku zvati \emph{KeyFeaturesNet} ili skra\'ceno \emph{KFN}.
+	
+	
+	\section{Rezultati testiranja}
+	
+	U ovom poglavlju \'cemo prikazati kakav uticaj razli\v citi na\v cini treniranja imaju na metrike \emph{KeyFeaturesNet}-a, kao i videti kako se njihovi rezultati nose sa rezultatima tradicionalnih (izglednih) autoenkodera. 
+	Svakom modelu treniranom posebnim na\v cinom u\v cenja kao i tradicionalnom autoenkoderu su dodeljene posebne identifikacione oznake radi lak\v seg prepoznavanja. 
+	Tradicionalni autoenkoder \'cemo ozna\v cavati kao \textbf{AE}. 
+	Za treniranje \emph{KFN}-a koristi\'cemo sve do sada  analizirane na\v cine u\v cenja. 
+	Prvi od njih je na\v cin na koji se treniraju izgledni autoenkoderi, a to je primena srednje kvadratne gre\v ske izme\dj u rezultata \emph{KFN}-a i originalnih podataka kao funkcije distorcije.
+	Modelu koji koristi ovu funkciju za treniranje dodeli\'cemo oznaku \textbf{KFN\_MSE}.
+	Zatim, prisetimo se na\v cina za treniranje su\v stinskih autoenkodera koje smo diskutovali u podpoglavlju \ref{treniranje-sustinskih-autoenkodera}.
+	Prvi od njih je da treniramo \emph{KFN} tako da distribucija verovatno\'ce klasifikacije rezultata \emph{KFN}-a bude jednaka distristribuciji verovatno\'ce klasifikacije originalnih podataka.
+	Ako se prisetimo realizacija ovoga je i\v sla spajanjem tada autoenkodera i istreniranog klasifikatora u novi model koji se trenira kao jedan veliki klasifikator, ali kome su parametri delova modela konstantni i njihova izmena se preska\v ce tokom propagacije u nazad.
+	Za treniranje velikog klasifikatora se kao funkcija distorcije uzima kros entropija (engl. \emph{cross entropy}) izme\dj u distribucija verovatno\'ce klasifikacije istreniranim klasifikatorom rezultata autoenkodera i originalnih podataka. 
+	Po nazivu funkcije koja se koristi ovaj model \'cemo ozna\v citi sa \textbf{KFN\_CE}. 
+	Slede\'ce \v sto smo rekli je da ne moramo pu\v stati vrednosti kroz ceo klasifikator, ve\'c da mo\v zemo i\'ci do odre\dj enog sloja i da pode\v savamo vrednosti parametara tako da vrednosti originalnih podataka i rezultata autoenkodera kada se puste kroz dati klasifikator budu jednake u datom sloju.
+	Prisetimo se da se veoma sli\v cna ideja koristi za enkoder deo \emph{KFN}-a i s toga mo\v zemo odabrati isti sloj da do njega idemo i za treniranje, a kao funkciju distorcije uzimamo srednju kvadratnu gre\v sku izme\dj u rezultata originalnih podataka i izlaza \emph{KFN}-a kada se u istreniranom klasifikatoru puste do datog sloja. 
+	Ovde treba napomenuti da se klasifikator od kojeg je uzeto prvih nekoliko slojeva kao enkoder \emph{KFN}-a koristi i tokom opisanog na\v cina treniranja.
+	Model treniran ovim na\v cinom ozna\v cavamo sa \textbf{KFN\_MID}.
+	Na kraju, mo\v zemo kombinovati date na\v cine treniranja izglednih i su\v stinskih autoenkodera kako bismo dobili izgledno-su\v stinski \emph{KFN} autoenkoder.
+	Operator koji je u testiranju kori\v s\'cen za kombinovanje funkcija distorcije je operator sabiranja $+$ nad realnim brojevima.
+	Biblioteka za rad sa neuronskim mre\v zama kori\v s\'cena u radu vrednosti funkcija gre\v ske mo\v ze da vrati kao vi\v sedimenzionalne tenzore i iz tog razloga su kori\v s\'cene funkcije redukcije kako bi se dati tenzori sveli na realne brojeve.
+	U ovu svrhu kori\v s\'cena je funkcija sumiranja koja vra\'ca zbir svih elemenata datog tenzora, a pored nje je kori\v s\'cena i funkcija srednje vrednosti koja dati tenzor preslikava na srednju vrednost njegovih elemenata.
+	U zavisnosti koja je funkcija redukcije kori\v s\'cena imamo redom sufikse SUM i AVG.
+	Kombinacijom KFN\_MSE i KFN\_CE dobijamo model sa oznakom \textbf{KFN\_CE\_MSE} i u zavisnosti od kori\v s\'cene funkcije redukcije imamo \textbf{KFN\_CE\_MSE\_SUM} i \textbf{KFN\_CE\_MSE\_AVG}.
+	Za KFN\_MSE i KFN\_MID analogno imamo model pod oznakom \textbf{KFN\_MID\_MSE} i u zavisnosti od kori\v s\'cene funkcije redukcije imamo \textbf{KFN\_MID\_MSE\_SUM} i \textbf{KFN\_MID\_MSE\_AVG}.
+	
+	Mere koje su kori\v s\'cene za evaluaciju klasifikatora su srednja vrednost funkcije gre\v ske, kao i preciznost klasfikacije na evaluacionom skupu podataka.
+	Za razliku od ovoga za autoenkoder i modele \emph{KFN}-a prikazana je identi\v cnost rezultata klasifikacije pri smanjenju dimenzionalnosti podataka i, manje bitne, srednja vrednost funkcije gre\v ske i ta\v cnost klasifikacije kada se rezultati odgovoraja\'cih modela puste kroz istrenirani klasifikator.
+	Za evaluaciju je kori\v s\'cen poseban skup podataka koji je nezavisan od skupa kori\v s\'cenog za treniranje bilo kog od navedenih modela.
+	
+	Dosta je bitno videti kako se modeli pona\v saju nad skupovima podataka razli\v cite kompleksnosti, odnosno koliko su skalabilni u zavisnosti od slo\v zenosti klasifikacionog problema kojim je dat.
+	
+	
+	\subsection{MNIST}
+	
+	\cite{lecun-mnisthandwrittendigit-2010}
+	
+	\subsection{CIFAR}
+	
+	\cite{cifar10}
 	
 	
 	
