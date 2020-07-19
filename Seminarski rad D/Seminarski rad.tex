@@ -458,7 +458,18 @@
 	\subsection{CIFAR-10}
 	\label{cifar10-section}
 	
-	\cite{cifar10}
+	CIFAR-10 je skup podataka koji se sastoji od 60000 slika u boji formata $32 \times 32$, podeljenih u 10 klasa tako da svaka klasa sadr\v zi po 6000 slika. 
+	Skup je podeljen na 50000 slika za treniranje i 10000 slika za testiranje \cite{cifar10}. 
+	Klase kojima ove slike mogu pripadati su avion, automobil, ptica, ma\v cka, jelen, pas, \v zaba, konj, broj i kamion.
+	Iako postoje mnogo kompleksniji skupovi podataka od CIFAR-10, on je zna\v cajno slo\v zeniji od MNIST-a.
+	Ne samo da su slike u boji i da su detaljnije, nego su i varijacije izme\dj u instanci iste klase mnogo ve\'ce nego \v sto je to bio slu\v caj kod MNIST-a.
+	Zbog svega ovoga ovaj skup podataka se mo\v ze posmatrati kao prvi ozbiljniji izazov za do sada diskutovane modele.
+	
+	Klasifikator kori\v s\'cen za ovaj problem je prilikom evaluacije dao srednju vrednost funkcije gre\v ske 0.7833 i ta\v cnost klasifikacije 0.7263 nad evaluacionim skupom podataka.
+	Za ovaj problem su kori\v s\'ceni \emph{dropout} slojevi radi izbegavanja \emph{overfitting}-a prilikom treniranja datog klasifikatora.
+	Prilikom kori\v s\'cenja ovog klasifikatora za treniranje \emph{KFN}-a svi \emph{dropout} slojevi se trebaju isklju\v citi, jer njihovo prisustvo negativno uti\v ce na kvalitet dobijenog modela.
+	Za \emph{KFN} je odabran poslednji konvolucijski sloj klasifikatora kojeg od izlaznog sloja razdvaja samo jedan \emph{dropout} sloj.
+	Dimenzije datog sloja su $4 \times 4 \times 16$ \v sto je isto kao i broj neurona uskog grla kori\v s\'cen u tradicionalnom autoenkoderu.
 	
 	\begin{table}[h!]
 		\centering
@@ -479,6 +490,15 @@
 		\caption{Rezultati evaluacije razli\v citih modela na skupu podataka CIFAR-10}
 		\label{cifar10-model-results-table}
 	\end{table}
+	
+	Rezultate evaluacije datih modela mo\v zemo pogledati u tabeli \ref{cifar10-model-results-table}.
+	Kao \v sto vidimo rezultati su mnogo lo\v siji u pore\dj enju sa istim nad skupom podataka MNIST.
+	U ovome ulogu igra kompleksnost skupa podataka, ali i klasifikator koji nije toliko dobar kao u prethodnom slu\v caju.
+	Uz sve ovo, pogledajmo sliku \ref{cifar10_images} i vide\'cemo da svi ovi rezultati samo potvr\dj uju ono \v sto smo primetili na prethodnom skupu podataka. 
+	KFN\_MSE je i dalje najlo\v siji u pogledu metrika, ali daje rezultate (slika \ref{cifar10:KFN_MSE}) koji su po izgledu bliski tradicionalnom autoenkoderu.
+	Su\v stinski \emph{KFN}-ovi su i dalje pri vrhu po rezultatima metrika, ali slike generisane njima su absolutno neraspoznatljive.
+	Ono \v sto jeste malo iznena\dj uju\'ce je da izgledno-su\v stinski \emph{KFN}-ovi koji koriste srednju vrednost kao redukcionu funkciju daju rezultate koji su u rangu su\v stinskih, ako ne i bolji, a pored toga generi\v su slike koje su za nijansu bolje, ali koje i dalje sadr\v ze veoma jasne artifakte.
+	U drugu ruku imamo izgledno-su\v stinske \emph{KFN}-ove koji koriste funkciju sume kao redukcionu funkciju i koji generi\v su slike (slike \ref{cifar10:KFN_CE_MSE_SUM} i \ref{cifar10:KFN_MID_MSE_SUM}) koje su gotovo identi\v cne \v cisto izglednom \emph{KFN}-u (slika \ref{cifar10:KFN_MSE}), a koje daju znatno bolje vrrednosti metrika koje su \v sta vi\v se bolje i od tradicionalnog autoenkodera.
 	
 	\begin{figure}[h!]
 		\centering
