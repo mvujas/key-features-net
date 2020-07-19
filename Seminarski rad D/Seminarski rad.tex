@@ -379,7 +379,7 @@
 	MNIST je skup podataka koji se sastoji iz dva dela: trening skupa sa 60000 primera i test skupa sa 10000 primera. 
 	On se sastoji od ru\v cno napisanih cifara od 0 do 9 u vidu crno-belih slika dimenzija $28 \times 28$ piksela. 
 	MNIST je veoma jednostavan skup podataka namenjen koji se preporu\v cuje ljudima koji \v zele da nau\v ce tehnike i metode prepoznava\'ca osobina na podacima iz stvarnog sveta \cite{lecun-mnisthandwrittendigit-2010}.
-	Kao takvog ovaj skup podataka mo\v zemo koristiti kao dobar pokazatelj da li su do sada diskutovani metodi uop\v ste primenljivi nad stvarnim podacima i kako se nose sa njima.
+	Kao takvog ovaj skup podataka mo\v zemo koristiti kao dobar pokazatelj da li su do sada diskutovani metodi uop\v ste primenljivi nad stvarnim podacima i koliko se dobro nose sa njima.
 	
 	\begin{table}[h!]
 		\centering
@@ -387,14 +387,14 @@
 			\hline
 			Model & \begin{tabular}{@{}c@{}}\emph{Loss} pri\\ klasifikaciji\\ rezultata\\ modela\end{tabular} & \begin{tabular}{@{}c@{}}Ta\v cnost pri\\ klasifikaciji\\ rezultata\\ modela\end{tabular} & \begin{tabular}{@{}c@{}}Identi\v cnost rezultata\\ klasifikacije pri\\ smanjenju\\ dimenzionalnosti\end{tabular}\\
 			\hline
-			\textbf{AE} & 0 & 0 & 0\\
-			\textbf{KFN\_MSE} & 0 & 0 & 0\\
-			\textbf{KFN\_CE} & 0 & 0 & 0\\
-			\textbf{KFN\_MID} & 0 & 0 & 0\\
-			\textbf{KFN\_CE\_MSE\_SUM} & 0 & 0 & 0\\
-			\textbf{KFN\_CE\_MSE\_AVG} & 0 & 0 & 0\\
-			\textbf{KFN\_MID\_MSE\_SUM} & 0 & 0 & 0\\
-			\textbf{KFN\_MID\_MSE\_AVG} & 0 & 0 & 0\\
+			\textbf{AE} & 0.1444 & 0.9561 & 0.9638\\
+			\textbf{KFN\_MSE} & 0.1723 & 0.9491 & 0.9569\\
+			\textbf{KFN\_CE} & 0.0573 & 0.9827 & 0.9970\\
+			\textbf{KFN\_MID} & 0.0533 & 0.9832 & 0.9985\\
+			\textbf{KFN\_CE\_MSE\_SUM} & 0.1255 & 0.9675 & 0.9740\\
+			\textbf{KFN\_CE\_MSE\_AVG} & 0.0554 & 0.9832 & 0.9947\\
+			\textbf{KFN\_MID\_MSE\_SUM} & 0.0723 & 0.9782 & 0.9848\\
+			\textbf{KFN\_MID\_MSE\_AVG} & 0.0514 & 0.9844 & 0.9981\\
 			\hline
 		\end{tabular}
 		\caption{Rezultati evaluacije razli\v citih modela na skupu podataka MNIST}
@@ -411,14 +411,14 @@
 			\hline
 			Model & \begin{tabular}{@{}c@{}}\emph{Loss} pri\\ klasifikaciji\\ rezultata\\ modela\end{tabular} & \begin{tabular}{@{}c@{}}Ta\v cnost pri\\ klasifikaciji\\ rezultata\\ modela\end{tabular} & \begin{tabular}{@{}c@{}}Identi\v cnost rezultata\\ klasifikacije pri\\ smanjenju\\ dimenzionalnosti\end{tabular}\\
 			\hline
-			\textbf{AE} & 0 & 0 & 0\\
-			\textbf{KFN\_MSE} & 0 & 0 & 0\\
-			\textbf{KFN\_CE} & 0 & 0 & 0\\
-			\textbf{KFN\_MID} & 0 & 0 & 0\\
-			\textbf{KFN\_CE\_MSE\_SUM} & 0 & 0 & 0\\
-			\textbf{KFN\_CE\_MSE\_AVG} & 0 & 0 & 0\\
-			\textbf{KFN\_MID\_MSE\_SUM} & 0 & 0 & 0\\
-			\textbf{KFN\_MID\_MSE\_AVG} & 0 & 0 & 0\\
+			\textbf{AE} & 1.4184 & 0.5282 & 0.6329\\
+			\textbf{KFN\_MSE} & 2.3489 & 0.3210 & 0.3936\\
+			\textbf{KFN\_CE} & 0.7910 & 0.7214 & 0.9529\\
+			\textbf{KFN\_MID} & 0.7988 & 0.7231 & 0.9484\\
+			\textbf{KFN\_CE\_MSE\_SUM} & 1.0444 & 0.6408 & 0.7744\\
+			\textbf{KFN\_CE\_MSE\_AVG} & 0.7955 & 0.7237 & 0.9500\\
+			\textbf{KFN\_MID\_MSE\_SUM} & 1.0269 & 0.6422 & 0.7804\\
+			\textbf{KFN\_MID\_MSE\_AVG} & 0.8108 & 0.7178 & 0.9379\\
 			\hline
 		\end{tabular}
 		\caption{Rezultati evaluacije razli\v citih modela na skupu podataka CIFAR-10}
