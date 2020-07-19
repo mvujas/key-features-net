@@ -318,11 +318,11 @@
 	
 	Diskutovali smo su\v stinske autoenkodere i na\v cine na koje se oni mogu trenirati, slede\'ce logi\v cno pitanje je kako mo\v zemo da ocenimo kvalitet su\v stinskog autoenkodera i uporedimo dva ovakva autoenkodera da odredimo koji je bolji.
 	Ideja su\v stinskih autoenkodera se fundamentalno razlikuje od gotovo svega do sada vi\dj enog u oblasti neurosnkih mre\v za i ma\v sinskog u\v cenja, s toga poznate standardne metrike nisu dobar pokazatelj kvaliteta modela ovog tipa autoenkodera.
-	Jedna ideja je da ako imamo skup podataka za evaluaciju $\mathcal{Y} = \{y_1, \dots, y_k\}$ da pustimo podatke prvo kroz autoenkoder, a zatim proverimo koliki je procenat njih svrstan u klasu u koju su labelovane.
+	Jedna ideja je da ako imamo skup podataka za evaluaciju $\mathcal{Y} = \{y_1, \dots, y_k\}$ i da pustimo podatke prvo kroz autoenkoder, a zatim proverimo koliki je procenat njih svrstan u klasu u koju su labelovane.
 	Ovo izgleda kao dobra metrika, ali ona nije u potpunosti u skladu sa motivacijom iza su\v stine podataka.
-	Ako se setimo cilj iza su\v stine podataka je da se podaci u \v sto ve\'coj meri klasifikuju u istu klasu u koju i rezultati kada se ti isti podaci puste kroz su\v stinski autoenkoder.
+	Ako se setimo cilj iza su\v stine podataka je da se originalni podaci u \v sto ve\'coj meri klasifikuju u istu klasu u koju i rezultati kada se ti isti podaci puste kroz su\v stinski autoenkoder.
 	Mo\v zemo pogledati definiciju \ref{identicality-of-results-of-classification-upon-dimensionality-reduction} koja defini\v se pojam identi\v cnost rezultata klasifikacije pri smanjenju dimenzionalnosti podataka, u nastavku samo identi\v cnost rezultata, koja je upravo mera ovoga do sada diskutovanog. 
-	Ova mera predstavlja procenat trening vektora iz skupa $\mathcal{Y}$ koji su klasifikovani klasifikatorom $g$ u istu klasu u koju su istim klasifikatorom klasifikovani i rezultati kada se isti ti trening vektori puste kroz autoenkoder $g$.
+	Ova mera predstavlja procenat trening vektora iz skupa $\mathcal{Y}$ koji su klasifikovani klasifikatorom $g$ u klasu u koju su istim klasifikatorom klasifikovani i rezultati rada autoenkodera $f$ kada se ti trening vektori puste kroz njega.
 	
 	\begin{definition}[Identi\v cnost rezultata klasifikacije pri smanjenju dimenzionalnosti]
 		\label{identicality-of-results-of-classification-upon-dimensionality-reduction}
@@ -333,14 +333,14 @@
 		$$
 	\end{definition}
 
-	Problem kod identi\v cnosti rezultata je pitanje izbora klasifikatora koji \'cemo da koristimo u datoj metrici i kao logi\v can odgovor na ovo se daje klasifikator koji je kori\v s\'cen tokom treniranja autoenkodera.
+	Problem kod identi\v cnosti rezultata je pitanje izbora klasifikatora koji \'cemo da koristimo u datoj metrici i kao logi\v can odgovor na ovo se nudi klasifikator koji je kori\v s\'cen tokom treniranja autoenkodera.
 	Me\dj utim, ovde se lako mo\v ze primetiti da se tako mo\v ze dobiti da je identi\v cnost rezultata na datom klasifikatoru visoka, a na ostalim klasifikatorima koji se koriste za isti klasifikacioni problem veoma mala, to jest odre\dj eni vid \emph{overfitting}-a. 
 	Ovo budi mnogo dublja pitanja.
 	Ako se prisetimo, mi do sada jo\v s nismo formalno definisali su\v stinu podataka i najbli\v ze \v sto smo rekli o njoj je da ako se iz podataka uklone sve osobine koje nisu bitne za klasifikaciju da ono \v sto ostaje je ustvari su\v stina podataka.
 	Ono \v sto je ovde problem je ako postoje dva klasifikatora $g_1$ i $g_2$ koji redom tragaju za skupovima osobina $\mathcal{G}_1$ i $\mathcal{G}_2$ nad odre\dj enim podacima u svrhu pronala\v zenja odgovora na isto klasifikaciono pitanje i na to sve jo\v s va\v zi da je $\mathcal{G}_1 \cap \mathcal{G}_2 \ne \emptyset$.
 	Preneseno re\v cima, ovo zna\v ci da dati klasifikatori tragaju za razli\v citim osobinama u svrhu klasifikacije podataka, \v sto bi zna\v cilo da su\v stina podataka nije jedinstvena izme\dj u klasifikatora koji re\v savaju isti klasifikacioni problem.
-	Ovaj problem izlazi iz okvira ovoga rada i s toga ostaje otvoreno pitanje, a ako je odgovor potvrdan, \v sto je verovatno i slu\v caj, treba razmisliti o na\v cinu da se su\v stina iz ugla vi\v se klasifikatora mo\v ze spojiti u jednu celinu.
-	Do trenutka dok se ne odgovori na ova pitanja svako kori\v s\'cenje su\v stinskih autoenkodera sa klasifikatorima sa kojima dati autoenkoder nije treniran je nepreporu\v cljivo.
+	Ovaj problem izlazi iz okvira ovoga rada i s toga ostaje otvoreno pitanje, a ako je odgovor potvrdan, \v sto je verovatno i slu\v caj, treba razmisliti o na\v cinu da se razli\v cite su\v stine iz ugla vi\v se klasifikatora mogu spojiti u jednu.
+	Do trenutka dok se ne odgovori na ova pitanja svako kori\v s\'cenje su\v stinskih autoenkodera sa klasifikatorima nad kojima dati autoenkoder nije treniran je nepreporu\v cljivo.
 	
 	\subsection{Izdvajanje su\v stine podataka}
 	
@@ -348,18 +348,18 @@
 	Me\dj utim su\v stinski autoenkoderi govore o o\v cuvanju su\v stine i postavlja se pitanje da li mo\v zemo nekako ovu ideju da iskoristimo za izdvajanje su\v stine iz samih podataka.
 	Ako se zamislimo kako klasifikatori rade, oni u su\v stini tragaju za odre\dj enim osobinama, \v sto bi intuitivno zna\v cilo da odbacuju one za koje vide da nemaju zna\v caja za klasifikaciju i tako kako se ide dublje u klasifikator se u su\v stini sve ve\'ci broj osobina filtrira i pri samom kraju ostaje reprezentacija koja sadr\v zi osobine ulaznih podataka koje su najbitnije za klasifikaciju.
 	Ono \v sto je cilj odavde je da probamo da od ove reprezentacije dobijemo podatke na ulazu i ako je intuicija ta\v cna onda su se osobine koje nisu bitne za klasifikaciju izgubile, \v sto zna\v ci da bi rekonstruisana verzija sadr\v zala samo osobine bitne za klasifikaciju, \v sto je ustvari ono \v sto smo definisali kao su\v stinu podataka.
-	Va\v zno je primetiti da se ovako gledano klasifikator pona\v sa sli\v cno enkoderu ako uzmemu prvih nekoliko slojeva klasifikatora, ali obavezno izostavimo poslednji sloj koji govori o distribuciji verovatno\'ce da  podaci pripadaju svakoj od datih klasa. 
+	Va\v zno je primetiti da se ovako uzetih prvih nekoliko slojeva klasifikatora pona\v sa sli\v cno enkoderu, ali obavezno trebamo izostaviti poslednji sloj koji govori o distribuciji verovatno\'ce da  podaci pripadaju svakoj od datih klasa. 
 	\v Sta vi\v se, popu\v stanjem op\v steg autoenkoder \textit{framework}-a (definicija \ref{general-autoencoder-framework}) mo\v zemo ovo uklopiti u njega.
 	Cilj treninga autoenkodera se svodi na pronalazak funkcija $B \in \mathcal{B}$ i $A \in \mathcal{A}$ za koje je funkcija distorcije $\Delta$ po skupu trening vektora minimalna.
 	Uzimanjem prvih nekoliko slojeva klasifikatora da igraju ulogu enkodera mi ustvari ve\'c dobijamo funkciju $B$ iz definicije i proces trenigna bi se ustvari sveo samo na pronalazak funkcije $A$. 
 	Ovo se mo\v ze realizovati na sli\v can na\v cin na koji smo realizovali treniranje su\v stinskog autoenkodera uz pomo\'c unapred istreniranog klasifikatora, a to je samo zamrznemo parametre datog dela klasifikatora, dok ostatak treniramo kao i obi\v cno propagacijom u nazad.
-	Za treniranje ovakve mre\v ze se mogu koristiti na\v cini treniranja izglednih, su\v stinskih, kao i izledno-su\v stinskih autoenkodera, \v sta vi\v se u nastavku rada \'ce se uporediti rezultati svakog od ovih na\v cina treniranja.
-	Ovakva mre\v za \'ce se u nastavku zvati \emph{KeyFeaturesNet} ili skra\'ceno \emph{KFN}.
+	Za treniranje ovakve mre\v ze se mogu koristiti na\v cini treniranja izglednih, su\v stinskih, kao i izledno-su\v stinskih autoenkodera i, \v sta vi\v se, u nastavku rada \'ce se uporediti rezultati svakog od ovih na\v cina treniranja.
+	Ovakva mre\v za \'ce se zvati \emph{KeyFeaturesNet} ili skra\'ceno \emph{KFN}.
 	
 	
 	\section{Rezultati testiranja}
 	
-	U ovom poglavlju \'cemo prikazati kakav uticaj razli\v citi na\v cini treniranja imaju na metrike \emph{KeyFeaturesNet}-a, kao i videti kako se njihovi rezultati nose sa rezultatima tradicionalnih (izglednih) autoenkodera. 
+	U ovom poglavlju \'cemo prikazati kakav uticaj razli\v citi na\v cini treniranja imaju na metrike \emph{KeyFeaturesNet}-a, kao i videti kako se njihovi rezultati porede sa rezultatima tradicionalnih (izglednih) autoenkodera. 
 	Svakom modelu treniranom posebnim na\v cinom u\v cenja kao i tradicionalnom autoenkoderu su dodeljene posebne identifikacione oznake radi lak\v seg prepoznavanja. 
 	Tradicionalni autoenkoder \'cemo ozna\v cavati kao \textbf{AE}. 
 	Za treniranje \emph{KFN}-a koristi\'cemo sve do sada  analizirane na\v cine u\v cenja. 
@@ -368,10 +368,10 @@
 	Zatim, prisetimo se na\v cina za treniranje su\v stinskih autoenkodera koje smo diskutovali u podpoglavlju \ref{treniranje-sustinskih-autoenkodera}.
 	Prvi od njih je da treniramo \emph{KFN} tako da distribucija verovatno\'ce klasifikacije rezultata \emph{KFN}-a bude jednaka distristribuciji verovatno\'ce klasifikacije originalnih podataka.
 	Ako se prisetimo realizacija ovoga je i\v sla spajanjem tada autoenkodera i istreniranog klasifikatora u novi model koji se trenira kao jedan veliki klasifikator, ali kome su parametri delova modela konstantni i njihova izmena se preska\v ce tokom propagacije u nazad.
-	Za treniranje velikog klasifikatora se kao funkcija distorcije uzima kros entropija (engl. \emph{cross entropy}) izme\dj u distribucija verovatno\'ce klasifikacije istreniranim klasifikatorom rezultata autoenkodera i originalnih podataka. 
+	Za treniranje velikog klasifikatora se kao funkcija gre\v ske uzima kros entropija (engl. \emph{cross entropy}) izme\dj u distribucija verovatno\'ce klasifikacije istreniranim klasifikatorom rezultata autoenkodera i originalnih podataka. 
 	Po nazivu funkcije koja se koristi ovaj model \'cemo ozna\v citi sa \textbf{KFN\_CE}. 
 	Slede\'ce \v sto smo rekli je da ne moramo pu\v stati vrednosti kroz ceo klasifikator, ve\'c da mo\v zemo i\'ci do odre\dj enog sloja i da pode\v savamo vrednosti parametara tako da vrednosti originalnih podataka i rezultata autoenkodera kada se puste kroz dati klasifikator budu jednake u datom sloju.
-	Prisetimo se da se veoma sli\v cna ideja koristi za enkoder deo \emph{KFN}-a i s toga mo\v zemo odabrati isti sloj da do njega idemo i za treniranje, a kao funkciju distorcije uzimamo srednju kvadratnu gre\v sku izme\dj u rezultata originalnih podataka i izlaza \emph{KFN}-a kada se u istreniranom klasifikatoru puste do datog sloja. 
+	Prisetimo se da se veoma sli\v cna ideja koristi za enkoder deo \emph{KFN}-a i s toga mo\v zemo odabrati isti sloj da do njega idemo i za treniranje, a kao funkciju gre\v ske uzimamo srednju kvadratnu gre\v sku izme\dj u rezultata originalnih podataka i izlaza \emph{KFN}-a kada se u istreniranom klasifikatoru puste do datog sloja. 
 	Ovde treba napomenuti da se klasifikator od kojeg je uzeto prvih nekoliko slojeva kao enkoder \emph{KFN}-a koristi i tokom opisanog na\v cina treniranja.
 	Model treniran ovim na\v cinom ozna\v cavamo sa \textbf{KFN\_MID}.
 	Na kraju, mo\v zemo kombinovati date na\v cine treniranja izglednih i su\v stinskih autoenkodera kako bismo dobili izgledno-su\v stinski \emph{KFN} autoenkoder.
@@ -382,8 +382,8 @@
 	Kombinacijom KFN\_MSE i KFN\_CE dobijamo model sa oznakom \textbf{KFN\_CE\_MSE} i u zavisnosti od kori\v s\'cene funkcije redukcije imamo \textbf{KFN\_CE\_MSE\_SUM} i \textbf{KFN\_CE\_MSE\_AVG}.
 	Za KFN\_MSE i KFN\_MID analogno imamo model pod oznakom \textbf{KFN\_MID\_MSE} i u zavisnosti od kori\v s\'cene funkcije redukcije imamo \textbf{KFN\_MID\_MSE\_SUM} i \textbf{KFN\_MID\_MSE\_AVG}.
 	
-	Mere koje su kori\v s\'cene za evaluaciju klasifikatora su srednja vrednost funkcije gre\v ske, kao i preciznost klasfikacije na evaluacionom skupu podataka.
-	Za razliku od ovoga za autoenkoder i modele \emph{KFN}-a prikazana je identi\v cnost rezultata klasifikacije pri smanjenju dimenzionalnosti podataka i, manje bitne, srednja vrednost funkcije gre\v ske (\v sto se jo\v s naziva \emph{loss}) i ta\v cnost klasifikacije kada se rezultati odgovoraja\'cih modela puste kroz istrenirani klasifikator.
+	Mere koje su kori\v s\'cene za evaluaciju klasifikatora su srednja vrednost funkcije gre\v ske, kao i ta\v cnost klasfikacije na evaluacionom skupu podataka.
+	Za razliku od ovoga za autoenkoder i modele \emph{KFN}-a kori\v s\'cena je identi\v cnost rezultata klasifikacije pri smanjenju dimenzionalnosti podataka i, manje bitne, srednja vrednost funkcije gre\v ske (\v sto se jo\v s naziva \emph{loss}) i ta\v cnost klasifikacije kada se rezultati odgovoraja\'cih modela puste kroz istrenirani klasifikator.
 	Za evaluaciju je kori\v s\'cen poseban skup podataka koji je nezavisan od skupa kori\v s\'cenog za treniranje bilo kog od navedenih modela.
 	
 	Dosta je bitno videti kako se modeli pona\v saju nad skupovima podataka razli\v cite kompleksnosti, odnosno koliko su skalabilni u zavisnosti od slo\v zenosti klasifikacionog problema koji im je dat.
@@ -394,13 +394,13 @@
 	
 	\subsection{MNIST}
 	
-	MNIST je skup podataka koji se sastoji iz dva dela: trening skupa sa 60000 primera i test skupa sa 10000 primera. 
+	MNIST je skup podataka koji se sastoji iz dva dela: trening skupa sa 60000 instanci i test skupa sa 10000 instanci. 
 	On se sastoji od ru\v cno napisanih cifara od 0 do 9 u vidu crno-belih slika dimenzija $28 \times 28$ piksela. 
-	MNIST je veoma jednostavan skup podataka namenjen koji se preporu\v cuje ljudima koji \v zele da nau\v ce tehnike i metode prepoznava\'ca osobina na podacima iz stvarnog sveta \cite{lecun-mnisthandwrittendigit-2010}.
+	MNIST je veoma jednostavan skup podataka koji se preporu\v cuje ljudima koji \v zele da nau\v ce tehnike i metode prepoznava\'ca osobina na podacima iz stvarnog sveta \cite{lecun-mnisthandwrittendigit-2010}.
 	Kao takvog ovaj skup podataka mo\v zemo koristiti kao dobar pokazatelj da li su do sada diskutovani metodi uop\v ste primenljivi nad stvarnim podacima i koliko se dobro nose sa njima.
 	
 	Za ovaj skup podataka kori\v s\'cen je klasifikator sa srednjom vredno\v s\'cu funkcije gre\v ske od $0.0514$ i ta\v cno\v s\'cu klasifikacije od $0.9841$ nad evaluacionim skupom podataka.
-	Svi slojevi klasifikatora sem izlaznog su uzeti u svrhu kreiranja enkoder dela \emph{KFN}-a i poslednji od datih je potpuno povezani sloj sa 20 izlaznih neurona, \v sto odgovara broju neurona u uskom grlu kori\v s\'cenog tradicionalnog autoenkodera.
+	Svi slojevi klasifikatora sem izlaznog su uzeti u svrhu kreiranja enkoder dela \emph{KFN}-a i poslednji od datih je potpuno povezani sloj sa 20 neurona, \v sto odgovara broju neurona u uskom grlu kori\v s\'cenog tradicionalnog autoenkodera.
 	
 	\begin{table}[h!]
 		\centering
@@ -426,7 +426,7 @@
 	Visoki rezultati datih metrika su dobar pokazatelj da dati modeli mogu imati odre\dj eni potencijal i da su svi oni na datom problemu u rangu tradicionalnog autoenkodera i, \v sta vi\v se, ve\'cina modela se pokazala bolje u pogledu rezultata metrika od samog autoenkodera.
 	Jedini model koji se pokazao lo\v sije u pogledu metrika od tradicionalnog autoenkodera je KFN\_MSE koji je jedini treniran kao \v cist izgledni autoenkoder i za koji se o\v cekivalo da od svih \emph{KFN}-ova da najlo\v sije rezultate metrika.
 	Kada se na sve to jo\v s uzme u obzir da je enkoder deo datog modela fiksiran i da sadr\v zi duplo manje parametara koje mo\v ze da u\v ci u pore\dj enju sa tradicionalnim autoenkoderom nije iznena\dj uju\'ce \v sto daje lo\v sije rezultate metrika i od njega.
-	\v Sto je tako\dj e je da KFN\_MID daje rezultate metrika veoma sli\v cne KFN\_CE \v sto je veoma iznena\dj uju\'ce, ali treba uzeti u obzir da je sloj koji je izabran za KFN\_MID odmah do izlaznog sloja klasifikatora, pa to verovatno i igra veliku ulogu u ovakvim rezultatima
+	\v Sto je tako\dj e zanimljivo je da KFN\_MID daje rezultate metrika veoma sli\v cne KFN\_CE \v sto je veoma iznena\dj uju\'ce, ali treba uzeti u obzir da je sloj koji je izabran za KFN\_MID odmah do izlaznog sloja klasifikatora, pa to verovatno i igra veliku ulogu u ovakvim rezultatima.
 
 	\begin{figure}[h!]
 		\centering
@@ -469,7 +469,7 @@
 	Klasifikator kori\v s\'cen za ovaj problem je prilikom evaluacije dao srednju vrednost funkcije gre\v ske 0.7833 i ta\v cnost klasifikacije 0.7263 nad evaluacionim skupom podataka.
 	Za ovaj problem su kori\v s\'ceni \emph{dropout} slojevi radi izbegavanja \emph{overfitting}-a prilikom treniranja datog klasifikatora.
 	Prilikom kori\v s\'cenja ovog klasifikatora za treniranje \emph{KFN}-a svi \emph{dropout} slojevi se trebaju isklju\v citi, jer njihovo prisustvo negativno uti\v ce na kvalitet dobijenog modela.
-	Za \emph{KFN} je odabran poslednji konvolucijski sloj klasifikatora kojeg od izlaznog sloja razdvaja samo jedan \emph{dropout} sloj.
+	Za \emph{KFN} su odabrai svi slojevi do poslednjeg konvolucijskog sloja klasifikatora kojeg od izlaznog sloja razdvaja samo jedan \emph{dropout} sloj.
 	Dimenzije datog sloja su $4 \times 4 \times 16$ \v sto je isto kao i broj neurona uskog grla kori\v s\'cen u tradicionalnom autoenkoderu.
 	
 	\begin{table}[h!]
@@ -495,11 +495,11 @@
 	Rezultate evaluacije datih modela mo\v zemo pogledati u tabeli \ref{cifar10-model-results-table}.
 	Kao \v sto vidimo rezultati su mnogo lo\v siji u pore\dj enju sa istim nad skupom podataka MNIST.
 	U ovome ulogu igra kompleksnost skupa podataka, ali i klasifikator koji nije toliko dobar kao u prethodnom slu\v caju.
-	Uz sve ovo, pogledajmo sliku \ref{cifar10_images} i vide\'cemo da svi ovi rezultati samo potvr\dj uju ono \v sto smo primetili na prethodnom skupu podataka. 
+	Uz sve ovo, pogledajmo sliku \ref{cifar10_images} i vide\'cemo da svi ovi rezultati samo potvr\dj uju stvari koje smo primetili na prethodnom skupu podataka. 
 	KFN\_MSE je i dalje najlo\v siji u pogledu metrika, ali daje rezultate (slika \ref{cifar10:KFN_MSE}) koji su po izgledu bliski tradicionalnom autoenkoderu.
 	Su\v stinski \emph{KFN}-ovi su i dalje pri vrhu po rezultatima metrika, ali slike generisane njima su absolutno neraspoznatljive.
-	Ono \v sto jeste malo iznena\dj uju\'ce je da izgledno-su\v stinski \emph{KFN}-ovi koji koriste srednju vrednost kao redukcionu funkciju daju rezultate koji su u rangu su\v stinskih, ako ne i bolji, a pored toga generi\v su slike koje su za nijansu bolje, ali koje i dalje sadr\v ze veoma jasne artifakte.
-	U drugu ruku imamo izgledno-su\v stinske \emph{KFN}-ove koji koriste funkciju sume kao redukcionu funkciju i koji generi\v su slike (slike \ref{cifar10:KFN_CE_MSE_SUM} i \ref{cifar10:KFN_MID_MSE_SUM}) koje su gotovo identi\v cne \v cisto izglednom \emph{KFN}-u (slika \ref{cifar10:KFN_MSE}), a koje daju znatno bolje vrrednosti metrika koje su \v sta vi\v se bolje i od tradicionalnog autoenkodera. 
+	Ono \v sto jeste malo iznena\dj uju\'ce je da izgledno-su\v stinski \emph{KFN}-ovi koji koriste srednju vrednost kao redukcionu funkciju daju rezultate koji su u rangu su\v stinskih, ako ne i bolji, a pored toga generi\v su slike koje su za nijansu jasnije, ali koje i dalje sadr\v ze primetne artifakte.
+	U drugu ruku imamo izgledno-su\v stinske \emph{KFN}-ove koji koriste funkciju sume kao redukcionu funkciju i koji generi\v su slike (slike \ref{cifar10:KFN_CE_MSE_SUM} i \ref{cifar10:KFN_MID_MSE_SUM}) koje su gotovo identi\v cne \v cisto izglednom \emph{KFN}-u (slika \ref{cifar10:KFN_MSE}), a koje daju znatno bolje vrednosti metrika koje su \v sta vi\v se ve\'ce i od metrika tradicionalnog autoenkodera. 
 	
 	\begin{figure}[h!]
 		\centering
@@ -520,6 +520,18 @@
 	
 	\section*{Zaklju\v cak}
 	\addcontentsline{toc}{section}{\protect{}Zaklju\v cak}
+	
+	Kroz rad smo diskutovali o su\v stini podataka i konsekvencama koje ona nosi sa sobom u pogledu smanjenja dimenzionalnosti. 
+	Otvorili smo mnoge teme i zapo\v celi pri\v cu u smeru mogu\'cih re\v senja, ali smo i mnoga pitanja ostavili da \v cekaju na odgovor.
+	Ono \v sto treba izvu\'ci kao poentu rada nisu principi koje rad nudi, jer su oni samo neki od potencijalno mnogih mogu\'cih, nego sama ideja o druga\v cijem pogledu na smenjenje dimenzionalnosti podataka i osnove koje rad postavlja u cilju identifikacije i prevazila\v zenja problema koje sa sobom nosi su\v stina podataka.
+	Pored ovoga uveli smo model \emph{KeyFeaturesNet}-a koji je za cilj imao da nas bolje upozna sa time \v sta su\v stina podataka ustvari mo\v ze biti, ali je umesto toga mnogo ve\'cu ulogu igrao u tome da prika\v ze kako se razli\v citi tipovi treniranja me\dj usobno porede jedni sa drugima.
+	Prilikom analize rezultata testiranja smo uvideli da su \v cisto su\v stinski i \v cisto izgledni autoenkoderi veoma dobri u onoj oblasti za koju su pravljeni, ali da u onoj drugoj ne daju tako dobre rezultate.
+	Kao re\v senje za ovo su se ponudili izgledno-su\v stinski autoenkoderi koji u zavisnosti od funkcije redukcije koja se koristi o\v cuvavaju dobre rezultate u jednoj od datih oblasti, a ovu drugu zna\v cajno popravljaju u pore\dj enju sa svojim \v cistim suparnicima.
+	
+	Va\v zno je imati u vidu da \emph{KFN} izlazi iz okvira onoga \v sto se mo\v ze nazvati autoenkoderom. 
+	S toga se mo\v ze re\'ci da rad nije testirao iznesene ideje nad pravim autoenkoderima i ovo se nudi kao slede\'ci korak u prou\v cavanju ideje.
+	Iako smo vi\v se puta naveli da \emph{KFN} nema veliki prakti\v can zna\v caj iz rezultata testiranja se vide da sadr\v zi odre\dj eni potencijal i pitanje koje se svakako postavlja je kako se ovaj koncept fiksnog enkoder dela autoenkodera mo\v ze iskombinovati sa pravim autoenkoderima i da li takva re\v senja nude ikakva pobolj\v sanja rezultata.
+	Jedna ideja za ovo je da se vrednost uskog grla ra\v cuna kao linearna kombinacija izlaza fiksnog enkodera i enkodera koji se u\v ci tokom treninga, ali ovakvu ideju treba detaljnije razmotriti i testirati da bi se videlo da li ona ima ikakav potencijal.
 	
 	\pagebreak
 	\bibliographystyle{unsrt}
