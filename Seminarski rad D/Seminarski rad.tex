@@ -129,13 +129,13 @@
 	\section*{Uvod}
 	\addcontentsline{toc}{section}{\protect{}Uvod}
 	
-	Autoenkoderi su ve\' c godinama zlatni standard u smanjenju dimenzionalnosti podataka. Na\v cin na koji rade se pokazao kao veoma efikasan u otklanjanju \v suma i dopunjavanju podataka koji su o\v ste\' ceni. Motivisan datim primerima, ovaj rad poku\v sava da prika\v ze novi na\v cin gledanja na smanjene dimenzionalnosti podataka ma\v sinskim u\v cenjem. Zatim, primenom iznesenih ideja i nekih od principa koji se nalaze u osnovi autoenkodera se uvodi model neuronske mre\v ze koji ima za cilj da iz podataka koji se prosle\dj uju modelu izdvoji najbitnije odlike za klasifikaciju. Kroz ovaj postupak se tako\dj e razmatraju novi na\v cini treniranja i evaluacije modela, a na kraju se rezultati datog modela porede sa rezultatima tradicionalnih autoenkodera.
+	Autoenkoderi su ve\' c godinama zlatni standard u smanjenju dimenzionalnosti podataka. Na\v cin na koji rade se pokazao kao veoma efikasan u otklanjanju \v suma i dopunjavanju podataka koji su o\v ste\' ceni. Motivisan datim primerima, ovaj rad poku\v sava da prika\v ze novi na\v cin gledanja na smanjene dimenzionalnosti podataka ma\v sinskim u\v cenjem. Zatim, primenom iznesenih ideja i nekih od principa koji se nalaze u osnovi autoenkodera uvodi model neuronske koji ima za cilj da iz podataka koji se mu prosle\dj eni izdvoji najbitnije odlike za klasifikaciju. Kroz ovaj postupak se tako\dj e razmatraju novi na\v cini treniranja i evaluacije modela, a na kraju se rezultati datog modela porede sa rezultatima tradicionalnih autoenkodera.
 	
 	\section{Su\v stinski autoenkoderi}
 	
 	\subsection{Su\v stina podataka i problem sa tradicionalnim autoenkoderom}
 	
-	Autoenkoderi su neuronske mre\v ze koje se treniraju da opona\v saju identi\v cko preslikavanje, to jest da ulaz preslikava na samog sebe. 
+	Autoenkoderi su neuronske mre\v ze koje se treniraju da opona\v saju identi\v cko preslikavanje, to jest da ulaz preslikavaju na samog sebe. 
 	Ovo samo po sebi ne izgleda veoma korisno, me\dj utim autoenkoderi, pored navedenih, sadr\v ze i osobinu da je broj neurona u najmanjem skrivenom sloju mre\v ze manji od broja neurona ulaznog i izlaznog sloja. 
 	Ovo za implikaciju ima da se prilikom prolaska podataka kroz mre\v zu u datom sloju nalazi reprezentacija podataka za \v cije je predstavljanje potreban manji broj memorijskih jedinica od originalnih podataka i ovo mo\v ze da varira od nekoliko jedinica, pa do redova veli\v cina manje. 
 	Dati skriveni sloj se naziva \emph{usko grlo} (engl. \emph{bottle neck}) i on deli neuronsku mre\v zu na dva dela: od ulaza do sebe i od sebe do izlaza. 
@@ -148,7 +148,7 @@
 	Na primer, ako imamo klasifikator koji traga za odlikom koja je sadr\v zana u veoma malom broju memorijskih jedinica u pore\dj enju sa veli\v cinom jedne instance podataka, a autonkoder zaklju\v ci da bi uvr\v stavanje date odlike samo pove\'calo gre\v sku, jer bi njenim uvr\v stavanjem bilo onemogu\'ceno uvr\v stavanje neke druge odlike koja je iz pogleda gre\v ske autoenkodera va\v znija.
 	Kao posledica, redukcija podataka ovim postupkom je ne potencijalno samo beskorisna, nego i \v cini podatke neupotrebljivim ako \v zelimo da ih klasifikujemo ili, jo\v s gore, koristimo za treniranje klasifikatora.
 	
-	Diskutovani problem svakako postavlja pitanje kako se mo\v ze prevazi\'ci, ali pre davanja odgovora na njega, potrobno je da defini\v semo podelu koja \'ce da omogu\'ci uo\v cavanje ovog problema jasnijim i lak\v sim. 
+	Diskutovani problem svakako postavlja pitanje kako se mo\v ze prevazi\'ci, ali pre davanja odgovora na njega, potrebno je da defini\v semo podelu koja \'ce da omogu\'ci uo\v cavanje ovog problema jasnijim i lak\v sim. 
 	Iz prikazanog rezonovanja se jasno mo\v ze uvideti da se autoenkoderi mogu trenirati ili u svrhu o\v cuvanja izgleda podataka ili u svrhu o\v cuvanja onoga \v sto podaci ustvari jesu, odnosno njihove \emph{su\v stine}.
 	Treba imati u vidu da podaci imaju gotovo bezbroj razli\v citih su\v stina u zavisnosti od toga iz kog se ugla posmatraju, to jest da se u zavisnosti od pitanja koje se postavlja o njima njihova su\v stina menja i odatle mo\v zemo da spojimo ideju o su\v stini sa problemom klasifikacije tako \v sto \'cemo re\'ci da pitanje koje postavlja klasifikacioni problem odre\dj uje su\v stinu podataka o kojoj u datom trenutku pri\v camo.
 	Ove ideje se koriste za podelu definisanu u definiciji \ref{autoencoder-training-based-types}. Iz ove definicije je jasno da su tradicionalni autoenkoderi ustvari izgledni autoenkoderi, dok autoenkoderi kojima se te\v zi u svrhu prevazila\v zenja diskutovanog problema su su\v stinski autoenkoderi, mada se i za njih, u zavisnosti od implementacije, postavlja pitanje koliko dobro mogu da o\v cuvaju odlike bitne za klasifikaciju.
@@ -172,10 +172,10 @@
 			\addtolength{\itemindent}{1em}
 			\item $\mathbb{F}$ i $\mathbb{G}$ su skupovi.
 			\item $n$ i $p$ su pozitivni celi brojevi. (Autor razmatra slu\v caj kada je $0 < p < n$ \v sto se podrazumeva prilikom pravljenja autoenkodera)
-			\item $\mathcal{A}$ je klasa funkcija koje preslikavaju iz  $\mathbb{G}^p$ na $\mathbb{F}^n$
-			\item $\mathcal{B}$ je klasa funkcija koje preslikavaju iz $\mathbb{F}^n$ na $\mathbb{G}^p$
+			\item $\mathcal{A}$ je klasa funkcija koje preslikavaju iz  $\mathbb{G}^p$ na $\mathbb{F}^n$.
+			\item $\mathcal{B}$ je klasa funkcija koje preslikavaju iz $\mathbb{F}^n$ na $\mathbb{G}^p$.
 			\item $\mathcal{X} = \{x_1, \ldots, x_m\}$ je skup od $m$ (trening) vektora u $\mathbb{F}^n$. Ako se radi o spolja\v snjem skupu ciljeva u $\mathbb{F}^n$ ozna\v cavamo ga sa $\mathcal{Y} = \{y_1, \ldots, y_n\}$.
-			\item $\Delta$ je funkcija razli\v citosti ili distorcije definisana nad $\mathbb{F}^n$
+			\item $\Delta$ je funkcija razli\v citosti ili distorcije definisana nad $\mathbb{F}^n$.
 		\end{enumerate}
 	\end{definition}
 	
@@ -195,7 +195,7 @@
 	Kao takva ona je o\v cigledna opcija za uklju\v cenje klasa kojima podaci pripadaju u trening i na taj na\v cin dobijanje su\v stinskog autoenkodera. 
 	Me\dj utim, ovo nije tako lako izvesti kao \v sto zvu\v ci. 
 	Dok se kod tradicionalnih, izglednih, autoenkodera srednja kvadratna gre\v ska nudi kao idealna funkcija gre\v ske, kod su\v stinskih autoenkodera stvari su malo komplikovanije i zahtevaju se odre\dj eni trikovi u cilju dobijanja \v zeljenog efekta.
-	Glavni problem je \v sto kod treniranja izglednih autoenkodera je vrednost koju mre\v za treba da proizvede poznata, dok kod su\v stinskih autoenkodera je poznata samo vrednost koja treba da se dobije kada se tra\v zeni rezultati puste kroz odre\dj enu funkciju.
+	Glavni problem je \v sto je kod treniranja izglednih autoenkodera vrednost koju mre\v za treba da proizvede poznata, dok kod su\v stinskih autoenkodera je poznata samo vrednost koja treba da se dobije kada se tra\v zeni rezultati puste kroz odre\dj enu funkciju.
 	Na osnovu ovoga definicija \ref{types-of-machine-learning-training} uvodi dva na\v cina treniranja na koja se model ma\v sinskog u\v cenja mo\v ze u\v citi.
 	
 	\begin{definition}[Podela na\v cina treniranja modela ma\v sinskog u\v cenja]
@@ -295,9 +295,9 @@
 	
 	Prethodno diskutovani proces treniranja, kao \v sto smo videli, sadr\v zi mane i probleme koji ga \v cine neupotrebljivim, me\dj utim on postavlja dobru osnovu u na\v cinu i smeru u kojem treba da se razmi\v slja o ovom problemu.
 	Ono \v sto smo uvideli iz prethodne diskusije je da je za pravljenje ispravnog su\v stinskog autoenkodera potreban ispravan klasifikator, a ma\v sinsko u\v cenje i neuronske mre\v ze se bave temom klasifikatora ve\'c dugo vremena i znamo kako se on mo\v ze napraviti.
-	Kada imamo istreniran klasifiaktor mo\v zemo da iskoristimo ideju da spojimo autoenkoder i klasifikator i treniramo novi model kao jedan veliki klasifikator, me\dj utim moramo da zamrznemo sve parametre ve\'c istreniranog klasifikatora, jer samo tako mo\v zemo da budemo sigurni da \'ce istreniran klasifikator biti ispravan tokom celog treninga i da \'ce se izbe\'ci problem iz prethodnog primera.
+	Kada imamo istreniran klasifikator mo\v zemo da iskoristimo ideju da spojimo autoenkoder i klasifikator i treniramo novi model kao jedan veliki klasifikator koji u\v ci da slika ulaz na klasu kojom su podaci labelovani, me\dj utim moramo da zamrznemo sve parametre ve\'c istreniranog klasifikatora, jer samo tako mo\v zemo da budemo sigurni da \'ce on biti ispravan tokom celog treninga i da \'ce se izbe\'ci problem iz prethodnog primera.
 	Realizacija ovoga je po prilici veoma prosta, i dalje se pu\v sta nazadna propagacija\footnote{algoritam koji se koristi za treniranje neuronskih mre\v za} kroz celu mre\v zu, ali uz izmenu da menja samo parametre autoenkodera, dok se parametri istreniranog klasifikatora preska\v cu kada na njih do\dj e red da budu izmenjeni.
-	Dati autoenkoder se na ovaj na\v cin trenira da preslikava ulaz na rezultat koji se klasifikacijom kroz dati istrenirani autoenkoder svrstava u tra\v zenu klasu.
+	Dati autoenkoder se na ovaj na\v cin trenira da preslikava ulaz na rezultat koji se klasifikacijom kroz dati istrenirani klasifikator svrstava u tra\v zenu klasu.
 	
 	Iako je prethodna ideja veoma blizu re\v senju koje problem zahteva, ona ipak ima jednu manu. 
 	Ako se prisetimo pri\v ce o su\v stini podataka, rekli smo da se originalni podaci i rezultat autoenkodera trebaju klasifikovati u istu klasu, a nema garancije da \'ce istrenirani klasifikator ispravno klasifikovati originalne podatke, dok mi treniramo autoenkoder kao da je ovo slu\v caj.
@@ -317,8 +317,8 @@
 	\subsection{Identi\v cnost rezultata klasifikacije pri smanjenju dimenzionalnosti podataka}
 	
 	Diskutovali smo su\v stinske autoenkodere i na\v cine na koje se oni mogu trenirati, slede\'ce logi\v cno pitanje je kako mo\v zemo da ocenimo kvalitet su\v stinskog autoenkodera i uporedimo dva ovakva autoenkodera da odredimo koji je bolji.
-	Ideja su\v stinskih autoenkodera se fundamentalno razlikuje od gotovo svega do sada vi\dj enog u oblasti neurosnkih mre\v za i ma\v sinskog u\v cenja, s toga poznate standardne metrike nisu dobar pokazatelj kvaliteta modela ovog tipa autoenkodera.
-	Jedna ideja je da ako imamo skup podataka za evaluaciju $\mathcal{Y} = \{y_1, \dots, y_k\}$ i da pustimo podatke prvo kroz autoenkoder, a zatim proverimo koliki je procenat njih svrstan u klasu u koju su labelovane.
+	Ideja su\v stinskih autoenkodera se fundamentalno razlikuje od gotovo svega do sada vi\dj enog u oblasti neurosnkih mre\v za i ma\v sinskog u\v cenja, s toga poznate standardne metrike nisu dobar pokazatelj kvaliteta modela ovog tipa mre\v ze.
+	Jedna ideja je da ako imamo skup podataka za evaluaciju $\mathcal{Y} = \{y_1, \dots, y_k\}$ da ga pustimo kroz autoenkoder, a zatim proverimo koliki je procenat rezultata autoenkodera klasifikatorom svrstan u klasu u koju su originalni podaci labelovani.
 	Ovo izgleda kao dobra metrika, ali ona nije u potpunosti u skladu sa motivacijom iza su\v stine podataka.
 	Ako se setimo cilj iza su\v stine podataka je da se originalni podaci u \v sto ve\'coj meri klasifikuju u istu klasu u koju i rezultati kada se ti isti podaci puste kroz su\v stinski autoenkoder.
 	Mo\v zemo pogledati definiciju \ref{identicality-of-results-of-classification-upon-dimensionality-reduction} koja defini\v se pojam identi\v cnost rezultata klasifikacije pri smanjenju dimenzionalnosti podataka, u nastavku samo identi\v cnost rezultata, koja je upravo mera ovoga do sada diskutovanog. 
@@ -326,7 +326,7 @@
 	
 	\begin{definition}[Identi\v cnost rezultata klasifikacije pri smanjenju dimenzionalnosti]
 		\label{identicality-of-results-of-classification-upon-dimensionality-reduction}
-		\sloppy Za autoenkoder $f : \mathbb{A}^n \to \mathbb{A}^n$ i klasifikator $g : \mathbb{A}^n \to \mathbb{B}$ (relacija $=$ mora biti definisana nad $\mathbb{B}$) koji vra\'ca klasu u kojoj se ulaz sa najve\'com veroatno\'com nalazi defini\v semo meru \emph{identi\v cnost rezultata klasifikacije pri smanjenju dimenzionalnosti podataka $\Upsilon$ nad skupom $\mathcal{Y} = \{y_1, \dots, y_k\}, \mathcal {Y} \subset \mathbb{A}^n$} kao:
+		\sloppy Za autoenkoder $f : \mathbb{A}^n \to \mathbb{A}^n$ i klasifikator $g : \mathbb{A}^n \to \mathbb{B}$ (relacija $=$ mora biti definisana nad $\mathbb{B}$) koji vra\'ca klasu u kojoj se ulaz sa najve\'com verovatno\'com nalazi defini\v semo meru \emph{identi\v cnost rezultata klasifikacije pri smanjenju dimenzionalnosti podataka $\Upsilon$ nad skupom $\mathcal{Y} = \{y_1, \dots, y_k\}, \mathcal {Y} \subset \mathbb{A}^n$} kao:
 		
 		$$
 		\Upsilon (f, g; \mathcal{Y}) = \frac{\left| \{y ~|~ y \in \mathcal{Y}~ \wedge~ g(y) = g(f(y))\}\right|}{\left| \mathcal{Y} \right|}.
@@ -337,7 +337,7 @@
 	Me\dj utim, ovde se lako mo\v ze primetiti da se tako mo\v ze dobiti da je identi\v cnost rezultata na datom klasifikatoru visoka, a na ostalim klasifikatorima koji se koriste za isti klasifikacioni problem veoma mala, to jest odre\dj eni vid \emph{overfitting}-a. 
 	Ovo budi mnogo dublja pitanja.
 	Ako se prisetimo, mi do sada jo\v s nismo formalno definisali su\v stinu podataka i najbli\v ze \v sto smo rekli o njoj je da ako se iz podataka uklone sve osobine koje nisu bitne za klasifikaciju da ono \v sto ostaje je ustvari su\v stina podataka.
-	Ono \v sto je ovde problem je ako postoje dva klasifikatora $g_1$ i $g_2$ koji redom tragaju za skupovima osobina $\mathcal{G}_1$ i $\mathcal{G}_2$ nad odre\dj enim podacima u svrhu pronala\v zenja odgovora na isto klasifikaciono pitanje i na to sve jo\v s va\v zi da je $\mathcal{G}_1 \cap \mathcal{G}_2 \ne \emptyset$.
+	Ono \v sto je ovde problem je ako postoje dva klasifikatora $g_1$ i $g_2$ koji redom tragaju za skupovima osobina $\mathcal{G}_1$ i $\mathcal{G}_2$ nad odre\dj enim podacima u svrhu pronala\v zenja odgovora na isto klasifikaciono pitanje i na to sve jo\v s va\v zi da je $(\mathcal{G}_1 \setminus \mathcal{G}_2) \cup (\mathcal{G}_2 \setminus \mathcal{G}_1) \ne \emptyset$.
 	Preneseno re\v cima, ovo zna\v ci da dati klasifikatori tragaju za razli\v citim osobinama u svrhu klasifikacije podataka, \v sto bi zna\v cilo da su\v stina podataka nije jedinstvena izme\dj u klasifikatora koji re\v savaju isti klasifikacioni problem.
 	Ovaj problem izlazi iz okvira ovoga rada i s toga ostaje otvoreno pitanje, a ako je odgovor potvrdan, \v sto je verovatno i slu\v caj, treba razmisliti o na\v cinu da se razli\v cite su\v stine iz ugla vi\v se klasifikatora mogu spojiti u jednu.
 	Do trenutka dok se ne odgovori na ova pitanja svako kori\v s\'cenje su\v stinskih autoenkodera sa klasifikatorima nad kojima dati autoenkoder nije treniran je nepreporu\v cljivo.
@@ -461,7 +461,7 @@
 	
 	CIFAR-10 je skup podataka koji se sastoji od 60000 slika u boji formata $32 \times 32$, podeljenih u 10 klasa tako da svaka klasa sadr\v zi po 6000 slika. 
 	Skup je podeljen na 50000 slika za treniranje i 10000 slika za testiranje \cite{cifar10}. 
-	Klase kojima ove slike mogu pripadati su avion, automobil, ptica, ma\v cka, jelen, pas, \v zaba, konj, broj i kamion.
+	Klase kojima ove slike mogu pripadati su avion, automobil, ptica, ma\v cka, jelen, pas, \v zaba, konj, brod i kamion.
 	Iako postoje mnogo kompleksniji skupovi podataka od CIFAR-10, on je zna\v cajno slo\v zeniji od MNIST-a.
 	Ne samo da su slike u boji i da su detaljnije, nego su i varijacije izme\dj u instanci iste klase mnogo ve\'ce nego \v sto je to bio slu\v caj kod MNIST-a.
 	Zbog svega ovoga ovaj skup podataka se mo\v ze posmatrati kao prvi ozbiljniji izazov za do sada diskutovane modele.
