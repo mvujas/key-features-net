@@ -10,6 +10,8 @@
 \usepackage{tocbibind} % Ubacuje literaturu u sadrzaj
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{pgffor}
+\usepackage{subcaption}
 
 \usepackage{tikz}
 \usetikzlibrary{matrix,chains,positioning,decorations.pathreplacing,arrows}
@@ -102,6 +104,21 @@
 	\clearpage
 	\pagenumbering{arabic} 
 }
+\makeatother
+
+\newcommand{\subfigureimg}[3]{
+\begin{subfigure}{.3\textwidth}
+	\centering
+	\includegraphics[width=.9\textwidth]{img/#1}
+	\caption{#2}
+	\label{#3}
+\end{subfigure}
+}
+
+%Making table aand figure have same counter
+\makeatletter 
+\let\c@table\c@figure
+\let\c@lstlisting\c@figure
 \makeatother
 
 \begin{document}
@@ -381,6 +398,9 @@
 	MNIST je veoma jednostavan skup podataka namenjen koji se preporu\v cuje ljudima koji \v zele da nau\v ce tehnike i metode prepoznava\'ca osobina na podacima iz stvarnog sveta \cite{lecun-mnisthandwrittendigit-2010}.
 	Kao takvog ovaj skup podataka mo\v zemo koristiti kao dobar pokazatelj da li su do sada diskutovani metodi uop\v ste primenljivi nad stvarnim podacima i koliko se dobro nose sa njima.
 	
+	Za ovaj skup podataka kori\v s\'cen je klasifikator sa srednjom vredno\v s\'cu funkcije gre\v ske od $0.0514$ i ta\v cno\v s\'cu klasifikacije od $0.9841$ nad evaluacionim skupom podataka.
+	Svi slojevi klasifikatora sem izlaznog su uzeti u svrhu kreiranja enkoder dela \emph{KFN}-a i poslednji od datih je potpuno povezani sloj sa 20 izlaznih neurona, \v sto odgovara broju neurona u uskom grlu kori\v s\'cenog tradicionalnog autoenkodera.
+	
 	\begin{table}[h!]
 		\centering
 		\begin{tabular}{|c|c|c|c|}
@@ -400,8 +420,43 @@
 		\caption{Rezultati evaluacije razli\v citih modela na skupu podataka MNIST}
 		\label{mnist-model-results-table}
 	\end{table}
+
+	U tabeli \ref{mnist-model-results-table} mo\v zemo videti rezultate evaluacije diskutovanih modela.
+	Visoki rezultati datih metrika su dobar pokazatelj da dati modeli mogu imati odre\dj eni potencijal i da su svi oni na datom problemu u rangu tradicionalnog autoenkodera i, \v sta vi\v se, ve\'cina modela se pokazala bolje u pogledu rezultata metrika od samog autoenkodera.
+	Jedini model koji se pokazao lo\v sije u pogledu metrika od tradicionalnog autoenkodera je KFN\_MSE koji je jedini treniran kao \v cist izgledni autoenkoder i za koji se o\v cekivalo da od svih \emph{KFN}-ova da najlo\v sije rezultate metrika.
+	Kada se na sve to jo\v s uzme u obzir da je enkoder deo datog modela fiksiran i da sadr\v zi duplo manje parametara koje mo\v ze da u\v ci u pore\dj enju sa tradicionalnim autoenkoderom nije iznena\dj uju\'ce \v sto daje lo\v sije rezultate metrika i od njega.
+	\v Sto je tako\dj e je da KFN\_MID daje rezultate metrika veoma sli\v cne KFN\_CE \v sto je veoma iznena\dj uju\'ce, ali treba uzeti u obzir da je sloj koji je izabran za KFN\_MID odmah do izlaznog sloja klasifikatora, pa to verovatno i igra veliku ulogu u ovakvim rezultatima
+
+	\begin{figure}[h!]
+		\centering
+		\subfigureimg{mnist/original}{Originalne slike}{mnist:original}
+		\foreach \path/\cap in {
+			AE/AE, 
+			KFN_MSE/KFN\_MSE, 
+			KFN_CE/KFN\_CE, 
+			KFN_MID/KFN\_MID, 
+			KFN_CE_MSE_SUM/KFN\_CE\_MSE\_SUM, 
+			KFN_CE_MSE_AVG/KFN\_CE\_MSE\_AVG, 
+			KFN_MID_MSE_SUM/KFN\_MID\_MSE\_SUM, 
+			KFN_MID_MSE_AVG/KFN\_MID\_MSE\_AVG} {\subfigureimg{mnist/\path}{\cap}{mnist:\path}}
+		
+		\caption{Originalne slike i slike generisane uz pomo\'c datih modela na skupu podataka MNIST}
+		\label{mnist_images}
+	\end{figure}
+
+	Slede\'ce pitanje koje se postavlja je da li su ovakvi rezultati metrika posledica kvaliteta modela ili jednostavnosti skupa podataka.
+	Da bismo imali bolji uvid u mogu\'cnosti modela pogledajmo slike generisane njima na slici \ref{mnist_images}.
+	Ono \v sto prvo upada u oko je da \emph{KFN}-ovi trenirani na\v cinom kao su\v stinski autoenkoderi (slike \ref{mnist:KFN_CE} i \ref{mnist:KFN_MID}) daju rezultate koji su neraspoznatljivi \v sto se ipak nije o\v cekivalo i pored toga \v sto se oni ne treniraju da o\v cuvaju izgled podataka.
+	Izgledno-su\v stinski autoenkoderi su se mnogo bolje pokazali i pored toga \v sto je rezultat od KFN\_MID\_MSE\_AVG veoma mutan (slika \ref{mnist:KFN_MID_MSE_AVG}), ipak se mogu uo\v citi obrisi cifara u njemu.
+	Jo\v s jedna stvar koja se treba uo\v citi je uticaj koji razli\v cite funkcije redukcije primenjene pre operatora mogu imati na krajnje rezultate izgledno-su\v stinskih autoenkodera.
+	Pogledajmo modele koji su koristili funkciju sume kao redukcionu funkciju i njihove rezultate na sikama \ref{mnist:KFN_CE_MSE_SUM} i \ref{mnist:KFN_MID_MSE_SUM}.
+	Lako se uo\v cava da su dati rezultati mnogo jasniji od njihovih suparnika koji su koristili srednju vrednost kao redukcionu funkciju i \v ciji su rezultati prikazani na slikama \ref{mnist:KFN_CE_MSE_AVG} i \ref{mnist:KFN_MID_MSE_AVG}.
+	U drugu ruku, ako pogledamo tabelu \ref{mnist-model-results-table} sa rezultatima evaluacije svakog od datih modela vide\'cemo da redukcijom uz pomo\'c funkcije srednje vrednosti se dobijaju bolji rezultati metrika od redukcije funkcijom sume.
+	Ovo je dobar pokazatelj prednosti i mana koje kori\v s\'cenje razli\v citih redukcionih funkcija nosi sa sobom.
+	U nastavku \'cemo pogledati da li ova pravilnost va\v zi i na kompleksnijem skupu podataka \v ciji su rezultati prikazani u podpoglavlju \ref{cifar10-section}.
 	
 	\subsection{CIFAR-10}
+	\label{cifar10-section}
 	
 	\cite{cifar10}
 	
@@ -425,7 +480,22 @@
 		\label{cifar10-model-results-table}
 	\end{table}
 	
-	
+	\begin{figure}[h!]
+		\centering
+		\subfigureimg{cifar10/original}{Originalne slike}{cifar10:original}
+		\foreach \path/\cap in {
+			AE/AE, 
+			KFN_MSE/KFN\_MSE, 
+			KFN_CE/KFN\_CE, 
+			KFN_MID/KFN\_MID, 
+			KFN_CE_MSE_SUM/KFN\_CE\_MSE\_SUM, 
+			KFN_CE_MSE_AVG/KFN\_CE\_MSE\_AVG, 
+			KFN_MID_MSE_SUM/KFN\_MID\_MSE\_SUM, 
+			KFN_MID_MSE_AVG/KFN\_MID\_MSE\_AVG} {\subfigureimg{cifar10/\path}{\cap}{cifar10:\path}}
+		
+		\caption{Originalne slike i slike generisane uz pomo\'c datih modela na skupu podataka CIFAR-10}
+		\label{cifar10_images}
+	\end{figure}
 	
 	\section*{Zaklju\v cak}
 	\addcontentsline{toc}{section}{\protect{}Zaklju\v cak}
