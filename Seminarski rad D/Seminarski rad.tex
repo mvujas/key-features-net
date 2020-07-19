@@ -172,8 +172,8 @@
 			\addtolength{\itemindent}{1em}
 			\item $\mathbb{F}$ i $\mathbb{G}$ su skupovi.
 			\item $n$ i $p$ su pozitivni celi brojevi. (Autor razmatra slu\v caj kada je $0 < p < n$ \v sto se podrazumeva prilikom pravljenja autoenkodera)
-			\item $\mathcal{A}$ je klasa funkcija koje preslikavaju ulaz iz  $\mathbb{G}^p$ na $\mathbb{F}^n$
-			\item $\mathcal{B}$ je klasa funkcija koje preslikavaju ulaz iz $\mathbb{F}^n$ na $\mathbb{G}^p$
+			\item $\mathcal{A}$ je klasa funkcija koje preslikavaju iz  $\mathbb{G}^p$ na $\mathbb{F}^n$
+			\item $\mathcal{B}$ je klasa funkcija koje preslikavaju iz $\mathbb{F}^n$ na $\mathbb{G}^p$
 			\item $\mathcal{X} = \{x_1, \ldots, x_m\}$ je skup od $m$ (trening) vektora u $\mathbb{F}^n$. Ako se radi o spolja\v snjem skupu ciljeva u $\mathbb{F}^n$ ozna\v cavamo ga sa $\mathcal{Y} = \{y_1, \ldots, y_n\}$.
 			\item $\Delta$ je funkcija razli\v citosti ili distorcije definisana nad $\mathbb{F}^n$
 		\end{enumerate}
@@ -182,11 +182,12 @@
 	Da bismo bolje razumeli datu definiciju i bli\v ze se upoznali sa terminologijom koja \'ce se koristiti u nastavku pro\dj imo kroz sve elemente date $t$-torke koja se koristi za predstavljanje autoenkodera. 
 	Kao \v sto smo ranije pri\v cali ideja iza autoenkodera je da nau\v ci da slika ulaz na samog sebe, a da pri tome postoji skriveni sloj koji je manjih dimenzija od samog ulaza i na ovaj na\v cin se posti\v ze smanjenje dimenzionalnosti podataka.
 	$n$ je ni\v sta manje nego broj dimenzija ulaza kao i izlaza, dok je $p$ broj dimenzija \emph{uskog grla}\footnote{sloj u kome se prilikom prolaza podataka kroz autoenkoder nalazi reprezentacija podataka smanjenih dimenzija}, po\v sto se cilja da je broj dimenzija uskog grla manji od broja dimenzija ulaza zato se i pretpostavlja da je $0 < p < n$. 
-	Svaka memorijska jedinica u ulaznom i izlaznom sloju, odnosno uskog grlu sadr\v zi podatke koji redom pripadaju skupovima $\mathbb{F}$ i $\mathbb{G}$. $\forall B \in \mathcal{B}$ je funkcija koja preslikava ulazne podatke u reprezentaciju smanjenih dimenzija i ona se naziva \emph{enkoder}. $\forall A \in \mathcal{A}$ radi obrnut proces od funkcija iz $\mathcal{B}$ i preslikava reprezentaciju smanjenih dimenzija na izlaz i ova funkcija se naziva \emph{dekoder}.
+	Svaka memorijska jedinica u ulaznom i izlaznom sloju, odnosno uskom grlu sadr\v zi podatke koji redom pripadaju skupovima $\mathbb{F}$ i $\mathbb{G}$. $\forall B \in \mathcal{B}$ je funkcija koja preslikava ulazne podatke u reprezentaciju smanjenih dimenzija i ona se naziva \emph{enkoder}. $\forall A \in \mathcal{A}$ radi obrnut proces od funkcija iz $\mathcal{B}$ i preslikava reprezentaciju smanjenih dimenzija na izlaz i ova funkcija se naziva \emph{dekoder}.
 	Treba primetiti da se ovde delovi neuronske mre\v ze posmatraju kao funkcije, jer oni to i jesu, i ova notacija \'ce se u nastavku koristiti kada se govori o neuronskim mre\v zama i njenim delovima.
 	Za treniranje autoenkodera su potrebni podaci i skup trening podataka je u datoj definiciji ozna\v cen sa $\mathcal{X}$.
 	Me\dj utim, podaci se ne koriste samo za treniranje i mo\v zemo imati podatke koji se koriste za evaluaciju ili podatke koji se pu\v staju kroz autoenkoder u cilju smanjenja dimenzionalnosti. 
-	Ovakvi skupovi podataka su u definiciji ozna\v ceni sa $\mathcal{Y}$. Na kraju, ostala je jo\v s da se objasni funkcija razli\v citosti ili distorcije $\Delta$ koja igra va\v znu ulogu u pprocesu treniranja autoenkodera.
+	Ovakvi skupovi podataka su u definiciji ozna\v ceni sa $\mathcal{Y}$. 
+	Na kraju, ostala je jo\v s da se objasni funkcija razli\v citosti ili distorcije $\Delta$ koja igra va\v znu ulogu u procesu treniranja autoenkodera.
 	Cilj treninga autoenkodera je pronalazak funkcija $A \in \mathcal{A}$ i $B \in \mathcal{B}$ za koje je vrednost funkcije distorcije minimalna nad celim skupom trening vektora $\mathcal{X}$. 
 	Funkcija distorcije $\Delta$ je primer onoga \v sto kod neuronskih mre\v za znamo kao funkcija gre\v ske ili \emph{loss} funkcija.
 	
@@ -279,11 +280,11 @@
 		\label{autoencoder-classifier-model-combination}
 	\end{figure}
 
-	Iako su su\v stinski autoenkoderi dati kao primer indirektnog treniranja, uz pomo\'c malog trika, se mo\v ze napraviti da njihovo treniranje bude deo direktnog procesa treniranja.
+	Iako su su\v stinski autoenkoderi dati kao primer indirektnog treniranja, uz pomo\'c malog trika, se mo\v ze posti\'ci da njihovo treniranje bude deo direktnog procesa treniranja.
 	Po\v sto znamo da rezultat su\v stinskog autoenkodera kada se pusti kroz klasifikator treba da da nama poznatu klasu, mo\v zemo ovo svesti na istovremeno treniranje autoenkodera i klasifikatora.
 	Ideja je da imamo strukturu autoenkodera i klasifikatora i da od njih napravimo novu neuronsku mre\v zu tako \v sto \'cemo staviti da ulaz prvo prolazi kroz autoenkoder, potom da izlaz autoenkodera bude ulaz u dati klasifikator, a sve zajedno treniramo kao da je jedan veliki klasifikator.
 	Po\v sto znamo da je izlaz autoenkodera istih dimenzija kao i ulaz, koji je ujedno istih dimenzija kao i ulaz klasifikatora, nema problema prilikom prosle\dj ivanja rezultata autoenkodera klasifikatoru, jer su dimenzije odgovaraju\'cih slojeva jednake.
-	Grafik na kojem je prikazan jedan ovakav model se mo\v ze videti na slici \ref{autoencoder-classifier-model-combination}.
+	Dijagram na kojem je prikazan jedan ovakav model se mo\v ze videti na slici \ref{autoencoder-classifier-model-combination}.
 	Ova ideja iako zvu\v ci mogu\'ce ipak sa sobom nosi dva problema.
 	Prvi je \v sto imamo veliki model \v sto za posledicu ima du\v ze vreme treniranja i mo\v ze da na\v skodi kvalitetu istreniranog modela.
 	Drugi problem je ono \v sto \v cini dati pristup beskorisnim, ali da bismo njega shvatili moramo se vratiti na koncept su\v stine podataka i njene korelacije sa originalnim podacima.
@@ -294,8 +295,8 @@
 	
 	Prethodno diskutovani proces treniranja, kao \v sto smo videli, sadr\v zi mane i probleme koji ga \v cine neupotrebljivim, me\dj utim on postavlja dobru osnovu u na\v cinu i smeru u kojem treba da se razmi\v slja o ovom problemu.
 	Ono \v sto smo uvideli iz prethodne diskusije je da je za pravljenje ispravnog su\v stinskog autoenkodera potreban ispravan klasifikator, a ma\v sinsko u\v cenje i neuronske mre\v ze se bave temom klasifikatora ve\'c dugo vremena i znamo kako se on mo\v ze napraviti.
-	Kada imamo istreniran klasifiaktor mo\v zemo da iskoristimo ideju da spojimo autoenkoder i klasifikator i treniramo novi model kao jedan veliki klasifikator, me\dj utim moramo da zamrznemo sve parametre ve\'c istreniranog klasifiaktora, jer samo tako mo\v zemo da budemo sigurni da \'ce istreniran klasifikator biti ispravan tokom celog treninga i da \'ce se izbe\'ci problem iz prethodnog primera.
-	Realizacija ovoga je po prilici veoma prosta, i dalje se pu\v sta nazadna propagacija\footnote{algoritam koji se koristi za treniranje neuronskih mre\v za} kroz celu mre\v zu, ali uz izmenu da menja samo parametre autoenkodera, dok parametri istreniranog klasifikatora preska\v ce kada na njih do\dj e red da se izmene.
+	Kada imamo istreniran klasifiaktor mo\v zemo da iskoristimo ideju da spojimo autoenkoder i klasifikator i treniramo novi model kao jedan veliki klasifikator, me\dj utim moramo da zamrznemo sve parametre ve\'c istreniranog klasifikatora, jer samo tako mo\v zemo da budemo sigurni da \'ce istreniran klasifikator biti ispravan tokom celog treninga i da \'ce se izbe\'ci problem iz prethodnog primera.
+	Realizacija ovoga je po prilici veoma prosta, i dalje se pu\v sta nazadna propagacija\footnote{algoritam koji se koristi za treniranje neuronskih mre\v za} kroz celu mre\v zu, ali uz izmenu da menja samo parametre autoenkodera, dok se parametri istreniranog klasifikatora preska\v cu kada na njih do\dj e red da budu izmenjeni.
 	Dati autoenkoder se na ovaj na\v cin trenira da preslikava ulaz na rezultat koji se klasifikacijom kroz dati istrenirani autoenkoder svrstava u tra\v zenu klasu.
 	
 	Iako je prethodna ideja veoma blizu re\v senju koje problem zahteva, ona ipak ima jednu manu. 
@@ -305,7 +306,7 @@
 	
 	Diskutovano re\v senje je, kao \v sto vidimo, ispravno, ali je ra\v cunski veoma zahtevno i bilo bi idealno ako bi mogao da se na\dj e na\v cin da se dati proces ubrza.
 	Ono \v sto mo\v ze da se uradi po ovom pitanju je da popustimo uslov i ne prolazimo kroz ceo istrenirani klasifikator tokom treninga, nego da idemo samo do odre\dj enog sloja datog klasifikatora i treniramo autoenkoder tako da vrednosti u datom sloju kada se rezultati puste kroz klasifikator budu iste kao i u slu\v caju originalnih podataka.
-	Ono \v sto je interesantno je da je na\v cin treniranja tradicionalnih autoenkodera i prethodno diskutovano re\v senje ustvari specijalan slu\v caj ovog pristupa: ako se uzme samo ulazni sloj mre\v ze, dobija se tradicionalno re\v senje, dok ako se uzme ceo autoenkoder dobija se originalno re\v senje izneseno u ovom radu. 
+	Ono \v sto je interesantno je da su na\v cin treniranja tradicionalnih autoenkodera i prethodno diskutovano re\v senje ustvari specijalni slu\v cajevi ovog pristupa: ako se uzme samo ulazni sloj mre\v ze, dobija se tradicionalno re\v senje, dok ako se uzme ceo autoenkoder dobija se originalno re\v senje izneseno u ovom radu. 
 	Realizacija ove ideje je analogna originalnom re\v senju, me\dj utim prilikom izbora ovog pristupa treba biti svestan da on sa sobom nosi manu da u op\v stem slu\v caju \v sto se uzme manji broj slojeva da \'ce rezultat klasifikacije podataka dobijenih autoenkoderom biti dalje od rezultata klasifikacije originalnih podataka.
 	
 	Svi autoenkoderi o kojima smo do sada pri\v cali ili su bili \v cisto izgledni ili \v cisto su\v stinski autoenkoderi, a ako se prisetimo definicije \ref{autoencoder-training-based-types}, u njoj smo uveli i tre\'cu vrstu koja kombinuje ove dve diskutovane ideje. 
@@ -498,7 +499,7 @@
 	KFN\_MSE je i dalje najlo\v siji u pogledu metrika, ali daje rezultate (slika \ref{cifar10:KFN_MSE}) koji su po izgledu bliski tradicionalnom autoenkoderu.
 	Su\v stinski \emph{KFN}-ovi su i dalje pri vrhu po rezultatima metrika, ali slike generisane njima su absolutno neraspoznatljive.
 	Ono \v sto jeste malo iznena\dj uju\'ce je da izgledno-su\v stinski \emph{KFN}-ovi koji koriste srednju vrednost kao redukcionu funkciju daju rezultate koji su u rangu su\v stinskih, ako ne i bolji, a pored toga generi\v su slike koje su za nijansu bolje, ali koje i dalje sadr\v ze veoma jasne artifakte.
-	U drugu ruku imamo izgledno-su\v stinske \emph{KFN}-ove koji koriste funkciju sume kao redukcionu funkciju i koji generi\v su slike (slike \ref{cifar10:KFN_CE_MSE_SUM} i \ref{cifar10:KFN_MID_MSE_SUM}) koje su gotovo identi\v cne \v cisto izglednom \emph{KFN}-u (slika \ref{cifar10:KFN_MSE}), a koje daju znatno bolje vrrednosti metrika koje su \v sta vi\v se bolje i od tradicionalnog autoenkodera.
+	U drugu ruku imamo izgledno-su\v stinske \emph{KFN}-ove koji koriste funkciju sume kao redukcionu funkciju i koji generi\v su slike (slike \ref{cifar10:KFN_CE_MSE_SUM} i \ref{cifar10:KFN_MID_MSE_SUM}) koje su gotovo identi\v cne \v cisto izglednom \emph{KFN}-u (slika \ref{cifar10:KFN_MSE}), a koje daju znatno bolje vrrednosti metrika koje su \v sta vi\v se bolje i od tradicionalnog autoenkodera. 
 	
 	\begin{figure}[h!]
 		\centering
